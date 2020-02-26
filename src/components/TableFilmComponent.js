@@ -1,11 +1,13 @@
 import React from "react";
-import { Table } from 'antd';
+import {Table} from 'antd';
 
 const columns = [
-  { title: 'Name', dataIndex: 'name', key: 'name',
-    render: text => <a>{text}</a>,},
-  { title: 'Age', dataIndex: 'age', key: 'age' },
-  { title: 'Address', dataIndex: 'address', key: 'address' },
+  {
+    title: 'Name', dataIndex: 'name', key: 'name',
+    render: text => <a>{text}</a>,
+  },
+  {title: 'Age', dataIndex: 'age', key: 'age'},
+  {title: 'Address', dataIndex: 'address', key: 'address'},
   {
     title: 'Action',
     dataIndex: '',
@@ -41,7 +43,8 @@ const data = [
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  }};
+  }
+};
 
 class TableFilmComponent extends React.Component {
   render() {
@@ -50,7 +53,7 @@ class TableFilmComponent extends React.Component {
         <Table
           rowSelection={rowSelection}
           columns={columns}
-          expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+          expandedRowRender={record => <p style={{margin: 0}}>{record.description}</p>}
           dataSource={data}
         />
       </div>

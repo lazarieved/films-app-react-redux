@@ -1,8 +1,36 @@
 import React from "react";
 import {Menu, Icon} from "antd";
 import "antd/dist/antd.css";
+import HomePage from "./HomePage";
+import FavoritePage from "./FavoritePage";
+import FilmPage from "./FilmPage";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+  useLocation,
+  Redirect,
+} from 'react-router-dom';
 
-class HeaderMenu extends React.Component{
+// const routes = [
+//   {
+//     path: "/",
+//     component: HomePage,
+//   },
+//   {
+//     path: "/favorite-page",
+//     component: FavoritePage,
+//   },
+//   {
+//     path: "/film-page",
+//     component: FilmPage,
+//   }
+// ];
+
+
+class HeaderMenu extends React.Component {
   state = {
     current: 'mail',
   };
@@ -12,26 +40,33 @@ class HeaderMenu extends React.Component{
       current: e.key,
     });
   };
+
   render() {
     return (
-      <Menu
-        onClick={this.handleClick}
-        selectedKeys={[this.state.current]}
-        mode="horizontal"
-      >
-        <Menu.Item key="home">
-          <Icon type="home" />
-          Home
-        </Menu.Item>
-        <Menu.Item key="favorite">
-          <Icon type="star" />
-          Favorite Films
-        </Menu.Item>
-        <Menu.Item key="login" style={{margin: '0 0 0 74.5%',}}>
-          <Icon type="login" />
-          Login
-        </Menu.Item>
-      </Menu>
+      <Router>
+        <Menu
+          onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal"
+        >
+          <Menu.Item key="home">
+            <Icon type="home"/>
+            <Link to='/' style={{display: 'inline'}}>Home</Link>
+          </Menu.Item>
+          <Menu.Item key="favorite">
+            <Icon type="star"/>
+            <Link to='/favorite-page' style={{display: 'inline'}}>Favorite Films</Link>
+          </Menu.Item>
+          <Menu.Item key="login" style={{margin: '0 0 0 74.5%',}}>
+            <Icon type="login"/>
+            Login
+          </Menu.Item>
+        </Menu>
+        <Switch>
+          <Route path='/favorite-page' component={FavoritePage}/>
+          <Route path='/' exact component={HomePage}/>
+        </Switch>
+      </Router>
     );
   }
 }

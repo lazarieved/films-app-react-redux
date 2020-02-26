@@ -4,16 +4,26 @@ import "antd/dist/antd.css";
 import HeaderMenu from "./HeaderMenu";
 import HomePage from "./HomePage";
 import FavoritePage from "./FavoritePage";
+import FilmPage from './FilmPage'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+  useLocation,
+  Redirect,
+} from 'react-router-dom';
+import Api from "../api/Api";
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <HeaderMenu />
-        {/*<HomePage />*/}
-        <FavoritePage />
+        <HeaderMenu api={Api}/>
       </div>
     );
   }
 }
+
 export default App;

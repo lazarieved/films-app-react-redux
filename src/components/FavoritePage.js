@@ -2,7 +2,7 @@ import React from "react";
 import SearchComponent from "./SearchComponent";
 import TableFilmComponent from "./TableFilmComponent";
 
-class FavoritePage extends React.Component{
+class FavoritePage extends React.Component {
   render() {
     return (
       <div style={{
@@ -10,8 +10,8 @@ class FavoritePage extends React.Component{
         'flex-direction': 'column',
         alignItems: "center"
       }}>
-        <SearchComponent />
-        <TableFilmComponent />
+        <SearchComponent/>
+        <TableFilmComponent/>
       </div>
     );
   }

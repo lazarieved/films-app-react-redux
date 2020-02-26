@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Card } from 'antd';
+import {List, Card} from 'antd';
 
 const data = [
   {
@@ -26,8 +26,7 @@ const data = [
 ];
 
 
-
-class FilmComponent extends React.Component{
+class FilmComponent extends React.Component {
   render() {
     return (
       <List

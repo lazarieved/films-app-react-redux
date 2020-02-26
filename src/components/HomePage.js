@@ -1,12 +1,12 @@
-import  React from "react";
-import { Layout } from 'antd';
+import React from "react";
+import {Layout} from 'antd';
 import FilterHomePage from "./FilterHomePage";
 import SearchComponent from './SearchComponent'
 import ContainerFilmComponent from "./ContainerFilmComponent";
 
-const { Sider, Content } = Layout;
+const {Sider, Content} = Layout;
 
-class HomePage extends React.Component{
+class HomePage extends React.Component {
   render() {
     return (
       <div>
@@ -20,7 +20,7 @@ class HomePage extends React.Component{
               alignItems: "center"
             }}
           >
-            <FilterHomePage />
+            <FilterHomePage/>
           </Sider>
           <Layout>
             <Content>
@@ -29,8 +29,8 @@ class HomePage extends React.Component{
                 'flex-direction': 'column',
                 alignItems: "center"
               }}>
-                <SearchComponent />
-                <ContainerFilmComponent />
+                <SearchComponent/>
+                <ContainerFilmComponent/>
               </div>
             </Content>
           </Layout>
