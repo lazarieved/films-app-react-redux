@@ -6,7 +6,7 @@ const {Search} = Input;
 class SearchComponent extends React.Component {
   render() {
     return (
-      <div style={{'align-self': "flex-end", margin: '20px'}}>
+      <div style={{ alignSelf: "flex-end", margin: '20px'}}>
         <Search
           placeholder="Search"
           onSearch={value => console.log(value)}

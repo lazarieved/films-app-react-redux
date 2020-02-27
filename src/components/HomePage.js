@@ -26,7 +26,7 @@ class HomePage extends React.Component {
             <Content>
               <div style={{
                 display: 'flex',
-                'flex-direction': 'column',
+                flexDirection: 'column',
                 alignItems: "center"
               }}>
                 <SearchComponent/>

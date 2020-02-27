@@ -8,7 +8,7 @@ import {store} from './store/configureStore'
 
 ReactDOM.render(
   <Provider store={store}>
-    {console.log(store)}
+    {console.log(store, 'ind store')}
     <App/>,
   </Provider>,
 document.getElementById('root')

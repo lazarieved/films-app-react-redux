@@ -7,7 +7,7 @@ class FavoritePage extends React.Component {
     return (
       <div style={{
         display: 'flex',
-        'flex-direction': 'column',
+        flexDirection: 'column',
         alignItems: "center"
       }}>
         <SearchComponent/>

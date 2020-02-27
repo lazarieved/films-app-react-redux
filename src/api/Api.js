@@ -1,17 +1,33 @@
-class Api {
-  constructor(url) {
-    this.baseUrl = url;
+import axios from 'axios';
 
-    this.get = this.sendResponse('GET');
+class Api {
+  constructor(baseUrl) {
+    this.baseURL = baseUrl;
   }
 
-  sendResponse = type => (path, params) => {
-    return fetch(`${this.baseUrl}${path}`, {
-      body: JSON.stringify(params),
-      method: type,
-    }).then(response => response.json()).then(response => console.log(response));
-  };
+  showAllFilms = (url, types, dispatch) => handle(types,url , dispatch);
 
 }
 
-export default new Api(' http://api.tvmaze.com');
+export default new Api();
+
+const handle = (types, url, dispatch) => {
+  dispatch({
+    type:  typeByStatus(types,'REQUEST'),
+  });
+  axios.get(`http://api.tvmaze.com${url}`)
+    .then(response => {
+      dispatch({
+        type: typeByStatus(types,'SUCCESS'),
+        payload: response
+      });
+    })
+    .catch(function (error) {
+      dispatch({
+        type: typeByStatus(types,'FAILED'),
+        payload: error
+      })
+    });
+};
+
+const typeByStatus = (types, status) => types.find(item => item.includes(status));

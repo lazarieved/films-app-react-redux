@@ -5,14 +5,18 @@ import {
 } from "../actions/containerFilmComponentActions";
 import {containerReducer} from "../reducers/containerFilmComponentReducer";
 import {connect} from 'react-redux'
+import Api from "../api/Api";
 
 
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
-    this.props.showAllFilms('/schedule/full')
+    this.props.showAllFilms('/show');
+
   }
+
   render() {
     const {films} = this.props;
+    console.log(this.props, 'props container');
     return (
       <div>
         <FilmComponent films={films}/>
@@ -22,18 +26,18 @@ class ContainerFilmComponent extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store);
+  console.log(store, 'store in container');
   const {
     containerReducer: {
-      films,
+      films = [],
     }
   } = store;
-  return {films};
+  return {films}
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    showAllFilms: item => dispatch(showAllFilms(item)),
+    showAllFilms: url => dispatch(showAllFilms(url)),
   }
 };
 
