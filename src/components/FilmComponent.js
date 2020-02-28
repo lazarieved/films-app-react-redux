@@ -1,87 +1,49 @@
 import React from "react";
-import {List, Card, Rate} from 'antd';
+import {List, Card, Rate, notification, } from 'antd';
 import renderHTML from 'react-render-html';
-
-// const data = [
-//   {
-//     title: 'Title 1',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 2',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 3',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 4',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 5',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 6',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-//   {
-//     title: 'Title 7',
-//     description: 'asdasdasd asdasd asd asd asd asd'
-//   },
-// ];
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+  useLocation,
+  Redirect,
+} from 'react-router-dom';
+import FavoritePage from "./FavoritePage";
+import FilmPage from "./FilmPage";
+import Icon from "antd/es/icon";
+import Button from "antd/es/button";
 
 const {Meta} = Card;
 
+const openNotificationWithIcon = type => {
+  notification.success({
+    message: 'Successfully',
+    description:
+      'The movie has been added to your favorites list.',
+  });
+};
 
 class FilmComponent extends React.Component {
+  handleClick = item => () =>{
+    this.props.addFilmFavorite(item);
+    openNotificationWithIcon()
+  };
+
   render() {
     console.log(this.props, 'film props');
     const {
-      films
+      films, searchFilms
     } = this.props;
-    let filmItems = films;
-    console.log(filmItems, 'filmitems');
-    let templateFilmItems = filmItems.map((item, index) => {
-        return (
-            <Card
-              hoverable
-              key={index}
-              data={item}
-              cover={<img alt="example" src={item.url}/>}
-            >
-              <Meta title={item.name} description={item.summary}/>
-            </Card>
-      // description={renderHTML(item.summary)}
-        )
+    let filmItems = () => {
+      if (searchFilms.length) {
+        return searchFilms;
+      } else {
+        return films;
       }
-    );
-    let currentCount1 = 0;
-    let currentCount2 = 0;
-    let currentCount3 = 0;
-
-    function makeCounter() {
-      return function() {
-        return currentCount1++;
-      };
-    }
-    function makeCounter1() {
-      return function() {
-        return currentCount2++;
-      };
-    }
-    function makeCounter2() {
-      return function() {
-        return currentCount3++;
-      };
-    }
-
-    let counter = makeCounter();
-    let counter1 = makeCounter1();
-    let counter2 = makeCounter2();
-
+    };
+    setTimeout(() => console.log(this.props, 'film props2'), 2000);
 
     return (
       <List
@@ -94,10 +56,11 @@ class FilmComponent extends React.Component {
           xl: 4,
           xxl: 3,
         }}
-        dataSource={filmItems}
+        dataSource={filmItems()}
         pagination={
-          {position: 'bottom',
-          pageSize: 12,
+          {
+            position: 'bottom',
+            pageSize: 12,
           }
         }
         renderItem={item => (
@@ -107,11 +70,20 @@ class FilmComponent extends React.Component {
             <Card
               hoverable
               style={{width: 220}}
-              cover={<img src={item.image.medium}/>}
+              data={item}
+              cover={<Link to='/film-page'><img style={{width: "100%"}} src={item.image.medium}/></Link>}
+              actions={[
+                <Button type="primary" onClick={this.handleClick(item)}>Add to favorite</Button>,
+              ]}
+              // onClick={this.props.addFilmFavorite(item)}
+
             >
-              <Meta  title={item.name} description={<Rate allowHalf  defaultValue={item.rating.average / 2} disabled />}/>
+              <Link to='/film-page'>
+                <Meta title={item.name}
+                      description={<Rate style={{marginLeft: '10%'}} allowHalf defaultValue={item.rating.average / 2}
+                      disabled/>}
+              /></Link>
             </Card>
-            {/*{templateFilmItems}*/}
           </List.Item>
         )}
       />

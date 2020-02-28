@@ -1,8 +1,9 @@
 import React from "react";
 import FilmComponent from "./FilmComponent";
 import {
+  addFilmFavorite,
   showAllFilms
-} from "../actions/containerFilmComponentActions";
+} from "../actions/apiActions";
 import {containerReducer} from "../reducers/containerFilmComponentReducer";
 import {connect} from 'react-redux'
 import Api from "../api/Api";
@@ -11,15 +12,18 @@ import Api from "../api/Api";
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
     this.props.showAllFilms('/show');
-
   }
 
   render() {
-    const {films} = this.props;
+    const {films, searchFilms, addFilmFavorite, favoriteFilms} = this.props;
     console.log(this.props, 'props container');
     return (
       <div>
-        <FilmComponent films={films}/>
+        <FilmComponent
+          films={films}
+          searchFilms={searchFilms}
+          addFilmFavorite={addFilmFavorite}
+        />
       </div>
     );
   }
@@ -30,14 +34,17 @@ const mapStateToProps = store => {
   const {
     containerReducer: {
       films = [],
+      searchFilms = [],
+      favoriteFilms = [],
     }
   } = store;
-  return {films}
+  return {films, searchFilms, favoriteFilms}
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     showAllFilms: url => dispatch(showAllFilms(url)),
+    addFilmFavorite: item => dispatch(addFilmFavorite(item)),
   }
 };
 

@@ -65,6 +65,7 @@ class HeaderMenu extends React.Component {
         <Switch>
           <Route path='/favorite-page' component={FavoritePage}/>
           <Route path='/' exact component={HomePage}/>
+          <Route path='/film-page' component={FilmPage}/>
         </Switch>
       </Router>
     );

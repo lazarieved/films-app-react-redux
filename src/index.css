@@ -1,0 +1,16 @@
+.sider-film-page{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 15px;
+  width: 500px;
+}
+.p-film-page{
+  font-size: 17px;
+}
+
+.content-film-page{
+  padding-left: 50px;
+  padding-top: 50px;
+  text-align: start;
+}

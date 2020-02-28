@@ -1,38 +1,54 @@
 import {
+  ADD_FILM_FAVORITE, DELETE_FILM_FAVORITE,
   GET_FILMS_REQUEST,
   GET_FILMS_SUCCESS,
-} from "../actions/containerFilmComponentActions";
+  GET_SEARCH_REQUEST,
+  GET_SEARCH_SUCCESS,
+} from "../constants/constants";
 
 
 const initialState = {
-  films: [
-  //   {
-  //   id: 1795126,
-  //   name: "Terrible, Shocking Things",
-  //   url: "http://www.tvmaze.com/episodes/1795126/briarpatch-1x03-terrible-shocking-things",
-  //   number: 3,
-  //   season: 1,
-  //   runtime: 60,
-  //   image: {medium: "http://static.tvmaze.com/uploads/images/medium_landscape/242/606454.jpg", original: "http://static.tvmaze.com/uploads/images/original_untouched/242/606454.jpg"},
-  //   summary: "<p>Jake throws a party. Allegra discovers a secret. A newcomer offers warnings and cocktails.</p>",
-  // }
-  ]
+  films: [],
+  searchFilms: [],
+  favoriteFilms: [],
 };
-
 
 
 export function containerReducer(state = initialState, action) {
   switch (action.type) {
     case GET_FILMS_SUCCESS:
-      console.log(action.payload)
-        return {
-          ...state,
-          films: [...state.films, ...action.payload.data]
-        };
-    case GET_FILMS_REQUEST:
-      console.log(action)
+      console.log(action.payload, 'act.pay getfilm-success');
       return {
         ...state,
+        films: [...state.films, ...action.payload.data]
+      };
+    case GET_FILMS_REQUEST:
+      console.log(action);
+      return {
+        ...state,
+      };
+    case GET_SEARCH_SUCCESS:
+      console.log(action.payload, 'act.pay searchfilm-success');
+      return {
+        ...state,
+        searchFilms: action.payload.data.map(item => item.show)
+      };
+    case GET_SEARCH_REQUEST:
+      console.log(action);
+      return {
+        ...state,
+      };
+    case ADD_FILM_FAVORITE:
+      console.log(action.payload, 'act.pay favoriteFilms');
+      return {
+        ...state,
+        favoriteFilms: [...state.favoriteFilms, action.payload]
+      };
+    case DELETE_FILM_FAVORITE:
+      console.log(action.payload, 'act.pay favoriteFilms');
+      return {
+        ...state,
+        favoriteFilms: [...state.favoriteFilms].filter(param => action.payload !== param.id)
       };
     default:
       return state;

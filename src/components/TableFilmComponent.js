@@ -1,44 +1,10 @@
 import React from "react";
 import {Table} from 'antd';
+import renderHTML from 'react-render-html';
+import Button from "antd/es/button";
+import {Link} from "react-router-dom";
 
-const columns = [
-  {
-    title: 'Name', dataIndex: 'name', key: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {title: 'Age', dataIndex: 'age', key: 'age'},
-  {title: 'Address', dataIndex: 'address', key: 'address'},
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: 'x',
-    render: () => <a>Delete</a>,
-  },
-];
 
-const data = [
-  {
-    key: 1,
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-  },
-  {
-    key: 2,
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-  },
-  {
-    key: 3,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-];
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -47,14 +13,49 @@ const rowSelection = {
 };
 
 class TableFilmComponent extends React.Component {
+  columns = [
+    {
+      title: 'Name', dataIndex: 'name', key: 'name',
+      render: text => <Link to='/film-page'><p>{text}</p></Link>,
+    },
+    {
+      title: 'Genres', dataIndex: 'genres', key: 'genres',
+      render: genres => <p>{genres.join(', ')}</p>
+    },
+    {title: 'Language', dataIndex: 'language', key: 'language'},
+    {title: 'Runtime', dataIndex: 'runtime', key: 'runtime'},
+    {title: 'Premiered', dataIndex: 'premiered', key: 'premiered'},
+    {
+      title: 'Rating', dataIndex: 'rating', key: 'rating',
+      render: rating => <p>{rating.average}</p>
+    },
+    {title: 'Type', dataIndex: 'type', key: 'type'},
+    {
+      title: 'Origin Link', dataIndex: 'url', key: 'url',
+      render: url => <a>{url}</a>,
+    },
+    {
+      title: 'Delete',
+      dataIndex: '',
+      key: 'x',
+      render: (record) => <Button
+        type="ghost"
+        onClick={()=>this.props.deleteFilmFavorite(record.id)}
+        style={{color: "red"}}>Delete</Button>,
+    },
+  ];
+
   render() {
+    console.log(this.props, 'props in table');
+    const {favoriteFilms} = this.props;
     return (
       <div>
         <Table
           rowSelection={rowSelection}
-          columns={columns}
-          expandedRowRender={record => <p style={{margin: 0}}>{record.description}</p>}
-          dataSource={data}
+          tableLayout={'fixed'}
+          columns={this.columns}
+          expandedRowRender={record => <p style={{margin: 0}}>{renderHTML(record.summary)}</p>}
+          dataSource={favoriteFilms}
         />
       </div>
     );
