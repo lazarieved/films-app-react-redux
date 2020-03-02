@@ -20,11 +20,6 @@ class ContainerFilmComponent extends React.Component {
       getFilmId,
       filterFilms,
     } = this.props;
-    console.log(this.props, 'props container');
-    // let abc = [];
-    // let aaa = films.filter(item => item.premiered != null)
-    // aaa.forEach(item => abc.push(item.premiered));
-    // console.log(abc, 'abc')
     return (
       <div>
         <FilmComponent

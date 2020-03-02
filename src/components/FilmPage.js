@@ -149,6 +149,11 @@ class FilmPage extends React.Component {
     console.log(filmPageId, 'filmIDIDID film-page');
     const filterFilms = films.filter(item => item.id == filmPageId);
     const filmItem = filterFilms[0] ? filterFilms[0] : demoItem;
+    const demoImg = 'https://images.wallpaperscraft.ru/image/fon_nebo_tochki_svet_83482_300x168.jpg';
+    const imgStyle = {
+      width: '240px',
+      margin: '4% 0 4% 25%'
+    };
 
     return (
       <div>
@@ -156,16 +161,18 @@ class FilmPage extends React.Component {
           <Sider theme='light' width={"auto"}>
             <div className='sider-film-page'>
               <Title>{filmItem.name}</Title>
-              {filmItem.image ? <img alt='text'
-                                     src={filmItem.image.medium}
-                                     style={{width: '240px', margin: '4% 0 4% 25%'}}
-                />
-                : <img alt='text' src='https://images.wallpaperscraft.ru/image/fon_nebo_tochki_svet_83482_300x168.jpg'
-                       style={{width: '240px', margin: '4% 0 4% 25%'}}
+              {filmItem.image
+                ? <img
+                    alt='text'
+                    src={filmItem.image.medium}
+                    style={imgStyle}
+                  />
+                : <img alt='text' src={demoImg}
+                       style={imgStyle}
                 />}
               <Button type="primary"
                       onClick={this.handleClick(filmItem)}
-                      style={{width: '240px', margin: '4% 0 4% 25%'}}
+                      style={imgStyle}
               >Add to favorite</Button>
             </div>
           </Sider>

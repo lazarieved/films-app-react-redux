@@ -24,20 +24,25 @@ class HeaderMenu extends React.Component {
   };
 
   render() {
+    const {current} = this.state;
+    const linkStyle ={
+      display: 'inline'
+    };
     return (
       <Router>
         <Menu
           onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
+          selectedKeys={[current]}
+          defaultSelectedKeys={['home']}
           mode="horizontal"
         >
           <Menu.Item key="home">
             <Icon type="home"/>
-            <Link to='/' style={{display: 'inline'}}>Home</Link>
+            <Link to='/' style={linkStyle}>Home</Link>
           </Menu.Item>
           <Menu.Item key="favorite">
             <Icon type="star"/>
-            <Link to='/favorite-page' style={{display: 'inline'}}>Favorite Films</Link>
+            <Link to='/favorite-page' style={linkStyle}>Favorite Films</Link>
           </Menu.Item>
           <Menu.Item key="login" style={{margin: '0 0 0 74.5%',}}>
             <Icon type="login"/>

@@ -7,11 +7,16 @@ const {Search} = Input;
 
 class SearchComponent extends React.Component {
   render() {
+    const divStyle = {
+      alignSelf: "flex-end",
+      margin: '20px'
+    };
+    const {showSearchFilms} = this.props;
     return (
-      <div style={{alignSelf: "flex-end", margin: '20px'}}>
+      <div style={divStyle}>
         <Search
           placeholder="Search"
-          onSearch={value => this.props.showSearchFilms(value)}
+          onSearch={value => showSearchFilms(value)}
           style={{width: 500}}
         />
       </div>
@@ -20,7 +25,6 @@ class SearchComponent extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in container');
   const {
     containerReducer: {
       films = [],

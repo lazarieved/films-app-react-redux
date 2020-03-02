@@ -27,7 +27,6 @@ class FilmComponent extends React.Component {
     const {
       films,
       searchFilms,
-      getFilmId,
       filterFilms,
     } = this.props;
     let filmItems = () => {
@@ -39,6 +38,12 @@ class FilmComponent extends React.Component {
         return films;
       }
     };
+    const imgStyle = {
+      width: "100%",
+      overflow: 'hidden',
+      height: '306px'
+    };
+    const demoImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Oleksa_Slisarenko_%281928%29.jpg/218px-Oleksa_Slisarenko_%281928%29.jpg';
 
     return (
       <List
@@ -68,10 +73,10 @@ class FilmComponent extends React.Component {
               style={{width: 220}}
               data={item}
               cover={<Link to='/film-page'>
-                <img style={{width: "100%", overflow: 'hidden', height: '306px'}}
+                <img style={imgStyle}
                      src={item.image
                        ? item.image.medium
-                       : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Oleksa_Slisarenko_%281928%29.jpg/218px-Oleksa_Slisarenko_%281928%29.jpg'}
+                       : demoImg}
                 />
               </Link>}
               actions={[
@@ -80,11 +85,13 @@ class FilmComponent extends React.Component {
             >
               <Link to='/film-page'>
                 <Meta title={item.name}
-                      description={<Rate style={{marginLeft: '10%'}}
-                                         allowHalf
-                                         defaultValue={item.rating.average / 2}
-                                         disabled
-                                    />}
+                      description={
+                        <Rate
+                          style={{marginLeft: '10%'}}
+                          allowHalf
+                          defaultValue={item.rating.average / 2}
+                          disabled
+                        />}
                 /></Link>
             </Card>
           </List.Item>

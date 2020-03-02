@@ -1,4 +1,4 @@
-import {Select, Radio} from 'antd';
+import {Select} from 'antd';
 import React from "react";
 import {Typography} from 'antd';
 import {addFilmFavorite, filterFilms, showAllFilms} from "../actions/Actions";
@@ -92,40 +92,51 @@ class FilterHomePage extends React.Component {
     size: 'default',
   };
   handleChangeCounrty = (value) => {
-    let correctFilms = this.props.films.filter(item => item.premiered && item.network && item.network.country != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.country.name === value);
-    this.props.filterFilms(filteredFilms);
-    console.log(correctFilms, 'correctFilms filter');
-    console.log(filteredFilms, 'use filter');
+    filterFilms(filteredFilms);
   };
   handleChangeCompany = (value) => {
-    let correctFilms = this.props.films.filter(item => item.premiered && item.network && item.network.country != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.name === value);
-    this.props.filterFilms(filteredFilms);
-    console.log(correctFilms, 'correctFilms filter');
-    console.log(filteredFilms, 'use filter');
+    filterFilms(filteredFilms);
   };
   handleChangeDates = (value) => {
-    let correctFilms = this.props.films.filter(item => item.premiered && item.network && item.network.country != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.premiered.slice(0, 4) === value);
-    this.props.filterFilms(filteredFilms);
-    console.log(correctFilms, 'correctFilms filter');
-    console.log(filteredFilms, 'use filter');
+    filterFilms(filteredFilms);
   };
   handleChangeGenres = (value) => {
-    let correctFilms = this.props.films.filter(item => item.premiered && item.network && item.network.country != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => {
       return item.genres.some(genr => {
         return value.some(pr => pr == genr);
       })
     });
-    this.props.filterFilms(filteredFilms);
-    console.log(value);
-    console.log(correctFilms, 'correctFilms filter');
-    console.log(filteredFilms, 'use filter');
+    filterFilms(filteredFilms);
   };
+///////////////////////////// другой вариант фильтра по жанру
+  // handleChangeGenres = (value) => {
+  // const { films, filterFilms } = this.props;
+  //   let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
+  //   let filteredFilms = correctFilms.slice();
+  //    value.forEach((item => {
+  //      filteredFilms = filteredFilms.filter(sr => {
+  //        return sr.genres.some(s => s === item);
+  //      })
+  //    }));
+  //   filterFilms(filteredFilms);
+  //   console.log(value);
+  //   console.log(correctFilms, 'correctFilms filter');
+  //   console.log(filteredFilms, 'use filter');
+  // };
   handleClickTop = () => {
-    let correctFilms = this.props.films.filter(item => item.rating != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.rating != null);
     correctFilms.sort((a, b) => {
       if (a.rating.average > b.rating.average) {
         return -1;
@@ -135,11 +146,11 @@ class FilterHomePage extends React.Component {
         return 0;
       }
     });
-    this.props.filterFilms(correctFilms);
-    console.log(correctFilms, 'correctFilms sort')
+    filterFilms(correctFilms);
   };
   handleClickDown = () => {
-    let correctFilms = this.props.films.filter(item => item.rating != null);
+    const { films, filterFilms } = this.props;
+    let correctFilms = films.filter(item => item.rating != null);
     correctFilms.sort((a, b) => {
       if (a.rating.average > b.rating.average) {
         return 1;
@@ -149,15 +160,23 @@ class FilterHomePage extends React.Component {
         return 0;
       }
     });
-    this.props.filterFilms(correctFilms);
-    console.log(correctFilms, 'correctFilms sort')
+    filterFilms(correctFilms);
   };
 
 
   render() {
     const {size} = this.state;
-    const {films} = this.props;
-    console.log(films, 'films filter');
+    const mainSelectStyle = {
+      width: '200px',
+      paddingBottom: '15px'
+    };
+    const subSelectStyle = {
+      width: '100%', paddingBottom: '15px'
+    };
+    const buttonStyle = {
+      width: '100%',
+      marginBottom: '15px'
+    };
     return (
       <div>
         <Title level={3}>Filters</Title>
@@ -166,7 +185,7 @@ class FilterHomePage extends React.Component {
           size={size}
           placeholder="Select genres"
           onChange={this.handleChangeGenres}
-          style={{width: '200px', paddingBottom: '15px'}}
+          style={mainSelectStyle}
           allowClear
         >
           {ganres}
@@ -176,7 +195,7 @@ class FilterHomePage extends React.Component {
           size={size}
           placeholder="Select date"
           onChange={this.handleChangeDates}
-          style={{width: '100%', paddingBottom: '15px'}}
+          style={subSelectStyle}
           allowClear
         >
           {dates}
@@ -186,7 +205,7 @@ class FilterHomePage extends React.Component {
           size={size}
           placeholder="Select Countries"
           onChange={this.handleChangeCounrty}
-          style={{width: '100%', paddingBottom: '15px'}}
+          style={subSelectStyle}
           allowClear
         >
           {countries}
@@ -195,7 +214,7 @@ class FilterHomePage extends React.Component {
           size={size}
           placeholder="Select Company"
           onChange={this.handleChangeCompany}
-          style={{width: '100%', paddingBottom: '15px'}}
+          style={subSelectStyle}
           allowClear
         >
           {companies}
@@ -203,12 +222,12 @@ class FilterHomePage extends React.Component {
         <br/>
         <Button type="primary"
                 onClick={this.handleClickTop}
-                style={{width: '100%', marginBottom: '15px'}}
+                style={buttonStyle}
         >Show top rating</Button>
         <br/>
         <Button type="primary"
                 onClick={this.handleClickDown}
-                style={{width: '100%', marginBottom: '15px'}}
+                style={buttonStyle}
         >Show down rating</Button>
       </div>
     );
@@ -216,7 +235,6 @@ class FilterHomePage extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in filters');
   const {
     containerReducer: {
       films = [],

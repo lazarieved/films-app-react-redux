@@ -51,7 +51,6 @@ class TableFilmComponent extends React.Component {
   };
 
   render() {
-    console.log(this.props, 'props in table');
     const {favoriteFilms} = this.props;
     return (
       <div>
@@ -68,7 +67,6 @@ class TableFilmComponent extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in film-page');
   const {
     containerReducer: {
       films = [],

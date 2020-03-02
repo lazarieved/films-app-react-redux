@@ -9,27 +9,29 @@ const {Sider, Content} = Layout;
 class HomePage extends React.Component {
 
   render() {
+    const siderStyle = {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    };
+    const conentStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: "center"
+    };
     return (
       <div>
         <Layout>
           <Sider
             width={250}
             theme='light'
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
+            style={siderStyle}
           >
             <FilterHomePage/>
           </Sider>
           <Layout>
             <Content>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: "center"
-              }}>
+              <div style={conentStyle}>
                 <SearchComponent/>
                 <ContainerFilmComponent searchData={1}/>
               </div>

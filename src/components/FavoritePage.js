@@ -5,14 +5,18 @@ import {connect} from "react-redux";
 
 class FavoritePage extends React.Component {
   render() {
-    const {deleteFilmFavorite, favoriteFilms} = this.props
+    const {deleteFilmFavorite, favoriteFilms} = this.props;
+    const divStyle ={
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: "center"
+    };
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: "center"
-      }}>
-        <TableFilmComponent favoriteFilms={favoriteFilms} deleteFilmFavorite={deleteFilmFavorite}/>
+      <div style={divStyle}>
+        <TableFilmComponent
+          favoriteFilms={favoriteFilms}
+          deleteFilmFavorite={deleteFilmFavorite}
+        />
       </div>
     );
   }
