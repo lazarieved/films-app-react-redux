@@ -1,18 +1,6 @@
 import React from "react";
-import {List, Card, Rate, notification, } from 'antd';
-import renderHTML from 'react-render-html';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink,
-  useLocation,
-  Redirect,
-} from 'react-router-dom';
-import FavoritePage from "./FavoritePage";
-import FilmPage from "./FilmPage";
-import Icon from "antd/es/icon";
+import {List, Card, Rate, notification,} from 'antd';
+import {Link,} from 'react-router-dom';
 import Button from "antd/es/button";
 
 const {Meta} = Card;
@@ -26,7 +14,7 @@ const openNotificationWithIcon = type => {
 };
 
 class FilmComponent extends React.Component {
-  handleClick = item => () =>{
+  handleClick = item => () => {
     this.props.addFilmFavorite(item);
     openNotificationWithIcon();
   };
@@ -40,15 +28,17 @@ class FilmComponent extends React.Component {
       films,
       searchFilms,
       getFilmId,
+      filterFilms,
     } = this.props;
     let filmItems = () => {
       if (searchFilms.length) {
         return searchFilms;
+      } else if (filterFilms.length) {
+        return filterFilms;
       } else {
         return films;
       }
     };
-    setTimeout(() => console.log(this.props, 'film props2'), 2000);
 
     return (
       <List
@@ -77,18 +67,25 @@ class FilmComponent extends React.Component {
               hoverable
               style={{width: 220}}
               data={item}
-              cover={<Link to='/film-page'><img style={{width: "100%"}} src={item.image.medium}/></Link>}
+              cover={<Link to='/film-page'>
+                <img style={{width: "100%", overflow: 'hidden', height: '306px'}}
+                     src={item.image
+                       ? item.image.medium
+                       : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Oleksa_Slisarenko_%281928%29.jpg/218px-Oleksa_Slisarenko_%281928%29.jpg'}
+                />
+              </Link>}
               actions={[
                 <Button type="primary" onClick={this.handleClick(item)}>Add to favorite</Button>,
               ]}
-              // onClick={this.props.addFilmFavorite(item)}
-
             >
               <Link to='/film-page'>
                 <Meta title={item.name}
-                      description={<Rate style={{marginLeft: '10%'}} allowHalf defaultValue={item.rating.average / 2}
-                      disabled/>}
-              /></Link>
+                      description={<Rate style={{marginLeft: '10%'}}
+                                         allowHalf
+                                         defaultValue={item.rating.average / 2}
+                                         disabled
+                                    />}
+                /></Link>
             </Card>
           </List.Item>
         )}

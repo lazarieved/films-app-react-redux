@@ -1,5 +1,5 @@
 import {
-  ADD_FILM_FAVORITE, DELETE_FILM_FAVORITE, GET_FILM_ID,
+  ADD_FILM_FAVORITE, DELETE_FILM_FAVORITE, FILTER_FILMS, GET_FILM_ID,
   GET_FILMS_REQUEST,
   GET_FILMS_SUCCESS,
   GET_SEARCH_REQUEST,
@@ -12,6 +12,7 @@ const initialState = {
   searchFilms: [],
   favoriteFilms: [],
   filmPageId: 1,
+  filterFilms: [],
 };
 
 
@@ -56,6 +57,12 @@ export function containerReducer(state = initialState, action) {
       return {
         ...state,
         filmPageId: action.payload
+      };
+    case FILTER_FILMS:
+      console.log(action.payload, 'act.pay filter-films');
+      return {
+        ...state,
+        filterFilms: action.payload
       };
     default:
       return state;

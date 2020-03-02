@@ -1,7 +1,7 @@
 import React from "react";
 import {Layout, notification, Comment, Icon, Tooltip, Avatar, Typography, Form, List, Input} from 'antd';
 import Button from "antd/es/button";
-import {addFilmFavorite, showAllFilms} from "../actions/apiActions";
+import {addFilmFavorite, showAllFilms} from "../actions/Actions";
 import {connect} from "react-redux";
 import renderHTML from "react-render-html";
 import moment from 'moment';
@@ -175,6 +175,8 @@ class FilmPage extends React.Component {
               <p className='p-film-page'><b>Language: </b>{filmItem.language}</p>
               <p className='p-film-page'><b>Runtime: </b>{filmItem.runtime}</p>
               <p className='p-film-page'><b>Premiered: </b>{filmItem.premiered}</p>
+              <p className='p-film-page'><b>Company: </b>{filmItem.network ? filmItem.network.name : filmItem.network}
+              </p>
               <p className='p-film-page'><b>Rating: </b>{filmItem.rating ? filmItem.rating.average : 'unknown'}</p>
               <p className='p-film-page'><b>Type: </b>{filmItem.type}</p>
               <p className='p-film-page'><b>Origin Link: </b><a href={filmItem.url}>{filmItem.url}</a></p>

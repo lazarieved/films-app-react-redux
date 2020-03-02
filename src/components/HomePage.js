@@ -3,8 +3,6 @@ import {Layout} from 'antd';
 import FilterHomePage from "./FilterHomePage";
 import SearchComponent from './SearchComponent'
 import ContainerFilmComponent from "./ContainerFilmComponent";
-import {showAllFilms, showSearchFilms} from "../actions/apiActions";
-import {connect} from "react-redux";
 
 const {Sider, Content} = Layout;
 
@@ -32,8 +30,8 @@ class HomePage extends React.Component {
                 flexDirection: 'column',
                 alignItems: "center"
               }}>
-                <SearchComponent />
-                <ContainerFilmComponent searchData={1} />
+                <SearchComponent/>
+                <ContainerFilmComponent searchData={1}/>
               </div>
             </Content>
           </Layout>

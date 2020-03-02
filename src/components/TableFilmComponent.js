@@ -3,10 +3,8 @@ import {Table} from 'antd';
 import renderHTML from 'react-render-html';
 import Button from "antd/es/button";
 import {Link} from "react-router-dom";
-import {addFilmFavorite, getFilmId, showAllFilms} from "../actions/apiActions";
+import {getFilmId} from "../actions/Actions";
 import {connect} from "react-redux";
-
-
 
 // const rowSelection = {
 //   onChange: (selectedRowKeys, selectedRows) => {
@@ -29,7 +27,9 @@ class TableFilmComponent extends React.Component {
     {title: 'Premiered', dataIndex: 'premiered', key: 'premiered'},
     {
       title: 'Rating', dataIndex: 'rating', key: 'rating',
-      render: rating => <p>{rating.average}</p>
+      render: rating => <p>{rating.average}</p>,
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.rating.average - b.rating.average,
     },
     {title: 'Type', dataIndex: 'type', key: 'type'},
     {

@@ -9,25 +9,7 @@ import {
   Switch,
   Route,
   Link,
-  NavLink,
-  useLocation,
-  Redirect,
 } from 'react-router-dom';
-
-// const routes = [
-//   {
-//     path: "/",
-//     component: HomePage,
-//   },
-//   {
-//     path: "/favorite-page",
-//     component: FavoritePage,
-//   },
-//   {
-//     path: "/film-page",
-//     component: FilmPage,
-//   }
-// ];
 
 
 class HeaderMenu extends React.Component {

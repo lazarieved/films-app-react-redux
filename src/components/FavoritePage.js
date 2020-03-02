@@ -1,7 +1,6 @@
 import React from "react";
-import SearchComponent from "./SearchComponent";
 import TableFilmComponent from "./TableFilmComponent";
-import {addFilmFavorite, deleteFilmFavorite, showAllFilms} from "../actions/apiActions";
+import {deleteFilmFavorite} from "../actions/Actions";
 import {connect} from "react-redux";
 
 class FavoritePage extends React.Component {
@@ -13,7 +12,6 @@ class FavoritePage extends React.Component {
         flexDirection: 'column',
         alignItems: "center"
       }}>
-        {/*<SearchComponent/>*/}
         <TableFilmComponent favoriteFilms={favoriteFilms} deleteFilmFavorite={deleteFilmFavorite}/>
       </div>
     );

@@ -1,13 +1,11 @@
 import React from "react";
 import FilmComponent from "./FilmComponent";
 import {
-  addFilmFavorite, getFilmId,
+  addFilmFavorite,
+  getFilmId,
   showAllFilms
-} from "../actions/apiActions";
-import {containerReducer} from "../reducers/containerFilmComponentReducer";
+} from "../actions/Actions";
 import {connect} from 'react-redux'
-import Api from "../api/Api";
-
 
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
@@ -15,13 +13,24 @@ class ContainerFilmComponent extends React.Component {
   }
 
   render() {
-    const {films, searchFilms, addFilmFavorite, favoriteFilms, getFilmId} = this.props;
+    const {
+      films,
+      searchFilms,
+      addFilmFavorite,
+      getFilmId,
+      filterFilms,
+    } = this.props;
     console.log(this.props, 'props container');
+    // let abc = [];
+    // let aaa = films.filter(item => item.premiered != null)
+    // aaa.forEach(item => abc.push(item.premiered));
+    // console.log(abc, 'abc')
     return (
       <div>
         <FilmComponent
           films={films}
           searchFilms={searchFilms}
+          filterFilms={filterFilms}
           addFilmFavorite={addFilmFavorite}
           getFilmId={getFilmId}
         />
@@ -38,9 +47,10 @@ const mapStateToProps = store => {
       searchFilms = [],
       favoriteFilms = [],
       filmPageId,
+      filterFilms = [],
     }
   } = store;
-  return {films, searchFilms, favoriteFilms, filmPageId}
+  return {films, searchFilms, favoriteFilms, filmPageId, filterFilms}
 };
 
 const mapDispatchToProps = dispatch => {

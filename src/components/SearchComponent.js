@@ -1,18 +1,14 @@
 import React from "react";
 import {Input} from 'antd';
-import {showSearchFilms} from "../actions/apiActions";
+import {showSearchFilms} from "../actions/Actions";
 import {connect} from "react-redux";
-import HomePage from "./HomePage";
 
 const {Search} = Input;
 
 class SearchComponent extends React.Component {
-  addValueSearch = () => {
-
-};
   render() {
     return (
-      <div style={{ alignSelf: "flex-end", margin: '20px'}}>
+      <div style={{alignSelf: "flex-end", margin: '20px'}}>
         <Search
           placeholder="Search"
           onSearch={value => this.props.showSearchFilms(value)}
@@ -28,7 +24,7 @@ const mapStateToProps = store => {
   const {
     containerReducer: {
       films = [],
-      searchFilms=[],
+      searchFilms = [],
     }
   } = store;
   return {films, searchFilms}
