@@ -1,5 +1,5 @@
 import {
-  ADD_FILM_FAVORITE, DELETE_FILM_FAVORITE,
+  ADD_FILM_FAVORITE, DELETE_FILM_FAVORITE, GET_FILM_ID,
   GET_FILMS_REQUEST,
   GET_FILMS_SUCCESS,
   GET_SEARCH_REQUEST,
@@ -11,6 +11,7 @@ const initialState = {
   films: [],
   searchFilms: [],
   favoriteFilms: [],
+  filmPageId: 1,
 };
 
 
@@ -49,6 +50,12 @@ export function containerReducer(state = initialState, action) {
       return {
         ...state,
         favoriteFilms: [...state.favoriteFilms].filter(param => action.payload !== param.id)
+      };
+    case GET_FILM_ID:
+      console.log(action.payload, 'act.pay film-ID');
+      return {
+        ...state,
+        filmPageId: action.payload
       };
     default:
       return state;

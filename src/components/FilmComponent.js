@@ -28,13 +28,18 @@ const openNotificationWithIcon = type => {
 class FilmComponent extends React.Component {
   handleClick = item => () =>{
     this.props.addFilmFavorite(item);
-    openNotificationWithIcon()
+    openNotificationWithIcon();
+  };
+  handleGetId = item => () => {
+    this.props.getFilmId(item.id);
   };
 
   render() {
     console.log(this.props, 'film props');
     const {
-      films, searchFilms
+      films,
+      searchFilms,
+      getFilmId,
     } = this.props;
     let filmItems = () => {
       if (searchFilms.length) {
@@ -68,6 +73,7 @@ class FilmComponent extends React.Component {
             padding: "20px"
           }}>
             <Card
+              onClick={this.handleGetId(item)}
               hoverable
               style={{width: 220}}
               data={item}

@@ -6,65 +6,65 @@ import {connect} from "react-redux";
 import renderHTML from "react-render-html";
 import moment from 'moment';
 
-const { Title } = Typography;
-const { TextArea } = Input;
-const {Sider, Content } = Layout;
+const {Title} = Typography;
+const {TextArea} = Input;
+const {Sider, Content} = Layout;
 
-const testItem = {
-      "id": 1,
-      "url": "http://www.tvmaze.com/shows/1/under-the-dome",
-      "name": "Under the Dome",
-      "type": "Scripted",
-      "language": "English",
-      "genres": [
-        "Drama",
-        "Science-Fiction",
-        "Thriller"
-      ],
-      "status": "Ended",
-      "runtime": 60,
-      "premiered": "2013-06-24",
-      "officialSite": "http://www.cbs.com/shows/under-the-dome/",
-      "schedule": {
-        "time": "22:00",
-        "days": [
-          "Thursday"
-        ]
-      },
-      "rating": {
-        "average": 6.5
-      },
-      "weight": 88,
-      "network": {
-        "id": 2,
-        "name": "CBS",
-        "country": {
-          "name": "United States",
-          "code": "US",
-          "timezone": "America/New_York"
-        }
-      },
-      "webChannel": null,
-      "externals": {
-        "tvrage": 25988,
-        "thetvdb": 264492,
-        "imdb": "tt1553656"
-      },
-      "image": {
-        "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-        "original": "http://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-      },
-      "summary": "<p><b>Under the Dome</b> is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome. The town's inhabitants must deal with surviving the post-apocalyptic conditions while searching for answers about the dome, where it came from and if and when it will go away.</p>",
-      "updated": 1573667713,
-      "_links": {
-        "self": {
-          "href": "http://api.tvmaze.com/shows/1"
-        },
-        "previousepisode": {
-          "href": "http://api.tvmaze.com/episodes/185054"
-        }
-      }
-    };
+const demoItem = {
+  "id": 1,
+  "url": "http://www.tvmaze.com/shows/1/under-the-dome",
+  "name": "Under the Dome",
+  "type": "Scripted",
+  "language": "English",
+  "genres": [
+    "Drama",
+    "Science-Fiction",
+    "Thriller"
+  ],
+  "status": "Ended",
+  "runtime": 60,
+  "premiered": "2013-06-24",
+  "officialSite": "http://www.cbs.com/shows/under-the-dome/",
+  "schedule": {
+    "time": "22:00",
+    "days": [
+      "Thursday"
+    ]
+  },
+  "rating": {
+    "average": 6.5
+  },
+  "weight": 88,
+  "network": {
+    "id": 2,
+    "name": "CBS",
+    "country": {
+      "name": "United States",
+      "code": "US",
+      "timezone": "America/New_York"
+    }
+  },
+  "webChannel": null,
+  "externals": {
+    "tvrage": 25988,
+    "thetvdb": 264492,
+    "imdb": "tt1553656"
+  },
+  "image": {
+    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+    "original": "http://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+  },
+  "summary": "<p><b>Under the Dome</b> is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome. The town's inhabitants must deal with surviving the post-apocalyptic conditions while searching for answers about the dome, where it came from and if and when it will go away.</p>",
+  "updated": 1573667713,
+  "_links": {
+    "self": {
+      "href": "http://api.tvmaze.com/shows/1"
+    },
+    "previousepisode": {
+      "href": "http://api.tvmaze.com/episodes/185054"
+    }
+  }
+};
 
 const openNotificationWithIcon = type => {
   notification.success({
@@ -74,7 +74,7 @@ const openNotificationWithIcon = type => {
   });
 };
 
-const CommentList = ({ comments }) => (
+const CommentList = ({comments}) => (
   <List
     dataSource={comments}
     header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
@@ -83,10 +83,10 @@ const CommentList = ({ comments }) => (
   />
 );
 
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
+const Editor = ({onChange, onSubmit, submitting, value}) => (
   <div>
     <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
+      <TextArea rows={4} onChange={onChange} value={value}/>
     </Form.Item>
     <Form.Item>
       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
@@ -119,7 +119,7 @@ class FilmPage extends React.Component {
         value: '',
         comments: [
           {
-            author: <b>Ananym</b>,
+            author: <b>Anonymous</b>,
             avatar: 'https://clipartart.com/images/anonomus-clipart-dog.png',
             content: <p>{this.state.value}</p>,
             datetime: moment().fromNow(),
@@ -137,44 +137,54 @@ class FilmPage extends React.Component {
   };
 
 
-  handleClick = item => () =>{
+  handleClick = item => () => {
     this.props.addFilmFavorite(item);
     openNotificationWithIcon()
   };
+
   render() {
-    const { comments, submitting, value } = this.state;
+    const {comments, submitting, value} = this.state;
+    const {films, filmPageId} = this.props;
+    console.log(films, 'films film-page');
+    console.log(filmPageId, 'filmIDIDID film-page');
+    const filterFilms = films.filter(item => item.id == filmPageId);
+    const filmItem = filterFilms[0] ? filterFilms[0] : demoItem;
 
     return (
       <div>
         <Layout>
-            <Sider theme='light' width={"auto"}>
-              <div className='sider-film-page'>
-                <Title>{testItem.name}</Title>
-                <img src={testItem.image.medium}
-                     style={{width: '240px', margin: '4% 0 4% 25%'}}
-                ></img>
-                <Button type="primary"
-                        onClick={this.handleClick(testItem)}
-                        style={{width: '240px', margin: '4% 0 4% 25%'}}
-                >Add to favorite</Button>
-              </div>
-            </Sider>
-            <Content>
-              <div className='sider-film-page content-film-page'>
-                <p className='p-film-page'><b>Genres: </b>{testItem.genres.join(', ')}</p>
-                <p className='p-film-page' ><b>Language: </b>{testItem.language}</p>
-                <p className='p-film-page' ><b>Runtime: </b>{testItem.runtime}</p>
-                <p className='p-film-page' ><b>Premiered: </b>{testItem.premiered}</p>
-                <p className='p-film-page' ><b>Rating: </b>{testItem.rating.average}</p>
-                <p className='p-film-page' ><b>Type: </b>{testItem.type}</p>
-                <p className='p-film-page' ><b>Origin Link: </b><a>{testItem.url}</a></p>
-                <p className='p-film-page' ><b>Description: </b>{renderHTML(testItem.summary)}</p>
-              </div>
-            </Content>
+          <Sider theme='light' width={"auto"}>
+            <div className='sider-film-page'>
+              <Title>{filmItem.name}</Title>
+              {filmItem.image ? <img alt='text'
+                                     src={filmItem.image.medium}
+                                     style={{width: '240px', margin: '4% 0 4% 25%'}}
+                />
+                : <img alt='text' src='https://images.wallpaperscraft.ru/image/fon_nebo_tochki_svet_83482_300x168.jpg'
+                       style={{width: '240px', margin: '4% 0 4% 25%'}}
+                />}
+              <Button type="primary"
+                      onClick={this.handleClick(filmItem)}
+                      style={{width: '240px', margin: '4% 0 4% 25%'}}
+              >Add to favorite</Button>
+            </div>
+          </Sider>
+          <Content>
+            <div className='sider-film-page content-film-page'>
+              <p className='p-film-page'><b>Genres: </b>{filmItem.genres ? filmItem.genres.join(', ') : 'unknown'}</p>
+              <p className='p-film-page'><b>Language: </b>{filmItem.language}</p>
+              <p className='p-film-page'><b>Runtime: </b>{filmItem.runtime}</p>
+              <p className='p-film-page'><b>Premiered: </b>{filmItem.premiered}</p>
+              <p className='p-film-page'><b>Rating: </b>{filmItem.rating ? filmItem.rating.average : 'unknown'}</p>
+              <p className='p-film-page'><b>Type: </b>{filmItem.type}</p>
+              <p className='p-film-page'><b>Origin Link: </b><a href={filmItem.url}>{filmItem.url}</a></p>
+              <p className='p-film-page'><b>Description: </b>{renderHTML(filmItem.summary)}</p>
+            </div>
+          </Content>
         </Layout>
         <div>
           <Title style={{marginLeft: '10px'}}>Comments</Title>
-          {comments.length > 0 && <CommentList comments={comments} />}
+          {comments.length > 0 && <CommentList comments={comments}/>}
           <Comment
             content={
               <Editor
@@ -192,20 +202,20 @@ class FilmPage extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in container');
+  console.log(store, 'store in film-page');
   const {
     containerReducer: {
       films = [],
-      searchFilms = [],
-      favoriteFilms = [],
+      filmPageId,
     }
   } = store;
-  return {films, searchFilms, favoriteFilms}
+  return {films, filmPageId}
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addFilmFavorite: item => dispatch(addFilmFavorite(item)),
+    showAllFilms: url => dispatch(showAllFilms(url)),
   }
 };
 

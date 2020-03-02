@@ -2,6 +2,7 @@ import Api from "../api/Api";
 import {
   ADD_FILM_FAVORITE,
   DELETE_FILM_FAVORITE,
+  GET_FILM_ID,
   GET_FILMS_FAILED,
   GET_FILMS_REQUEST,
   GET_FILMS_SUCCESS,
@@ -36,4 +37,11 @@ export const deleteFilmFavorite = (item) => {
     type: DELETE_FILM_FAVORITE,
     payload: item,
   }
+};
+
+export  const  getFilmId = (id) => {
+    return {
+      type: GET_FILM_ID,
+      payload: id,
+    }
 };

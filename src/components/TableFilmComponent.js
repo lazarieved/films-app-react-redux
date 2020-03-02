@@ -3,20 +3,22 @@ import {Table} from 'antd';
 import renderHTML from 'react-render-html';
 import Button from "antd/es/button";
 import {Link} from "react-router-dom";
+import {addFilmFavorite, getFilmId, showAllFilms} from "../actions/apiActions";
+import {connect} from "react-redux";
 
 
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  }
-};
+// const rowSelection = {
+//   onChange: (selectedRowKeys, selectedRows) => {
+//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+//   }
+// };
 
 class TableFilmComponent extends React.Component {
   columns = [
     {
       title: 'Name', dataIndex: 'name', key: 'name',
-      render: text => <Link to='/film-page'><p>{text}</p></Link>,
+      render: (text, item) => <Link to='/film-page'><p onClick={this.handleClick(item)}>{text}</p></Link>,
     },
     {
       title: 'Genres', dataIndex: 'genres', key: 'genres',
@@ -32,7 +34,7 @@ class TableFilmComponent extends React.Component {
     {title: 'Type', dataIndex: 'type', key: 'type'},
     {
       title: 'Origin Link', dataIndex: 'url', key: 'url',
-      render: url => <a>{url}</a>,
+      render: url => <a href={url}>{url}</a>,
     },
     {
       title: 'Delete',
@@ -44,6 +46,9 @@ class TableFilmComponent extends React.Component {
         style={{color: "red"}}>Delete</Button>,
     },
   ];
+  handleClick = item => () => {
+    this.props.getFilmId(item.id);
+  };
 
   render() {
     console.log(this.props, 'props in table');
@@ -51,7 +56,7 @@ class TableFilmComponent extends React.Component {
     return (
       <div>
         <Table
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           tableLayout={'fixed'}
           columns={this.columns}
           expandedRowRender={record => <p style={{margin: 0}}>{renderHTML(record.summary)}</p>}
@@ -62,4 +67,24 @@ class TableFilmComponent extends React.Component {
   }
 }
 
-export default TableFilmComponent;
+const mapStateToProps = store => {
+  console.log(store, 'store in film-page');
+  const {
+    containerReducer: {
+      films = [],
+    }
+  } = store;
+  return {films}
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getFilmId: id => dispatch(getFilmId(id)),
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TableFilmComponent);
+
