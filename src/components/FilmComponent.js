@@ -15,7 +15,13 @@ const openNotificationWithIcon = type => {
 
 class FilmComponent extends React.Component {
   handleClick = item => () => {
-    this.props.addFilmFavorite(item);
+    const {addFilmFavorite, addFilmFavoriteIsLogin, favoriteFilmsIsLogin} = this.props;
+    if (localStorage.getItem('isLogin')) {
+      addFilmFavoriteIsLogin(item);
+
+    } else {
+      addFilmFavorite(item);
+    }
     openNotificationWithIcon();
   };
   handleGetId = item => () => {
@@ -89,7 +95,7 @@ class FilmComponent extends React.Component {
                         <Rate
                           style={{marginLeft: '10%'}}
                           allowHalf
-                          defaultValue={item.rating.average / 2}
+                          defaultValue={item.rating ? (item.rating.average / 2) : 1}
                           disabled
                         />}
                 /></Link>

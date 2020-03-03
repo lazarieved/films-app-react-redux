@@ -42,7 +42,10 @@ class TableFilmComponent extends React.Component {
       key: 'x',
       render: (record) => <Button
         type="ghost"
-        onClick={()=>this.props.deleteFilmFavorite(record.id)}
+        onClick={() => {
+          this.props.deleteFilmFavorite(record.id);
+          this.props.deleteFilmFavoriteIsLogin(record.id)
+        }}
         style={{color: "red"}}>Delete</Button>,
     },
   ];
@@ -52,6 +55,8 @@ class TableFilmComponent extends React.Component {
 
   render() {
     const {favoriteFilms} = this.props;
+    const storageList = JSON.parse(localStorage.getItem('favoriteFilmsIsLogin'));
+
     return (
       <div>
         <Table
@@ -59,7 +64,7 @@ class TableFilmComponent extends React.Component {
           tableLayout={'fixed'}
           columns={this.columns}
           expandedRowRender={record => <p style={{margin: 0}}>{renderHTML(record.summary)}</p>}
-          dataSource={favoriteFilms}
+          dataSource={localStorage.getItem('isLogin') ? storageList : favoriteFilms}
         />
       </div>
     );

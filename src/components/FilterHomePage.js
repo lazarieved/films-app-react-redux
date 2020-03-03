@@ -92,25 +92,25 @@ class FilterHomePage extends React.Component {
     size: 'default',
   };
   handleChangeCounrty = (value) => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.country.name === value);
     filterFilms(filteredFilms);
   };
   handleChangeCompany = (value) => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.name === value);
     filterFilms(filteredFilms);
   };
   handleChangeDates = (value) => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.premiered.slice(0, 4) === value);
     filterFilms(filteredFilms);
   };
   handleChangeGenres = (value) => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => {
       return item.genres.some(genr => {
@@ -135,7 +135,7 @@ class FilterHomePage extends React.Component {
   //   console.log(filteredFilms, 'use filter');
   // };
   handleClickTop = () => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.rating != null);
     correctFilms.sort((a, b) => {
       if (a.rating.average > b.rating.average) {
@@ -149,7 +149,7 @@ class FilterHomePage extends React.Component {
     filterFilms(correctFilms);
   };
   handleClickDown = () => {
-    const { films, filterFilms } = this.props;
+    const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.rating != null);
     correctFilms.sort((a, b) => {
       if (a.rating.average > b.rating.average) {

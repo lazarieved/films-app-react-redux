@@ -163,10 +163,10 @@ class FilmPage extends React.Component {
               <Title>{filmItem.name}</Title>
               {filmItem.image
                 ? <img
-                    alt='text'
-                    src={filmItem.image.medium}
-                    style={imgStyle}
-                  />
+                  alt='text'
+                  src={filmItem.image.medium}
+                  style={imgStyle}
+                />
                 : <img alt='text' src={demoImg}
                        style={imgStyle}
                 />}

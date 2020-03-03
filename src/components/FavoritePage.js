@@ -1,12 +1,12 @@
 import React from "react";
 import TableFilmComponent from "./TableFilmComponent";
-import {deleteFilmFavorite} from "../actions/Actions";
+import {deleteFilmFavorite, deleteFilmFavoriteIsLogin} from "../actions/Actions";
 import {connect} from "react-redux";
 
 class FavoritePage extends React.Component {
   render() {
-    const {deleteFilmFavorite, favoriteFilms} = this.props;
-    const divStyle ={
+    const {deleteFilmFavorite, favoriteFilms, deleteFilmFavoriteIsLogin} = this.props;
+    const divStyle = {
       display: 'flex',
       flexDirection: 'column',
       alignItems: "center"
@@ -16,6 +16,7 @@ class FavoritePage extends React.Component {
         <TableFilmComponent
           favoriteFilms={favoriteFilms}
           deleteFilmFavorite={deleteFilmFavorite}
+          deleteFilmFavoriteIsLogin={deleteFilmFavoriteIsLogin}
         />
       </div>
     );
@@ -35,6 +36,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteFilmFavorite: item => dispatch(deleteFilmFavorite(item)),
+    deleteFilmFavoriteIsLogin: item => dispatch(deleteFilmFavoriteIsLogin(item)),
   }
 };
 
