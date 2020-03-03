@@ -1,7 +1,7 @@
 import React from "react";
 import {Layout, notification, Comment, Icon, Tooltip, Avatar, Typography, Form, List, Input} from 'antd';
 import Button from "antd/es/button";
-import {addFilmFavorite, showAllFilms} from "../actions/Actions";
+import {addFilmFavorite, addFilmFavoriteIsLogin, showAllFilms} from "../actions/Actions";
 import {connect} from "react-redux";
 import renderHTML from "react-render-html";
 import moment from 'moment';
@@ -113,21 +113,26 @@ class FilmPage extends React.Component {
       submitting: true,
     });
 
-    setTimeout(() => {
+
+      const { filmPageId} = this.props;
+      const storageComments = localStorage.getItem('commentsList');
+      const list = storageComments ? JSON.parse(storageComments) : [];
+      const login = JSON.parse(localStorage.getItem('login'));
+      const moveList = [
+        {
+          author: localStorage.getItem('isLogin') ? login.login: 'Anonymous',
+          avatar: 'https://clipartart.com/images/anonomus-clipart-dog.png',
+          content: this.state.value,
+          uniq: filmPageId,
+          datetime: moment().format("MMM Do YY"),
+        },
+        ...list,
+      ];
       this.setState({
         submitting: false,
         value: '',
-        comments: [
-          {
-            author: <b>Anonymous</b>,
-            avatar: 'https://clipartart.com/images/anonomus-clipart-dog.png',
-            content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-          ...this.state.comments,
-        ],
       });
-    }, 1000);
+      localStorage.setItem('commentsList', JSON.stringify(moveList));
   };
 
   handleChange = e => {
@@ -138,13 +143,19 @@ class FilmPage extends React.Component {
 
 
   handleClick = item => () => {
-    this.props.addFilmFavorite(item);
+    const {addFilmFavorite, addFilmFavoriteIsLogin} = this.props;
+    addFilmFavorite(item);
+    addFilmFavoriteIsLogin(item);
     openNotificationWithIcon()
   };
 
   render() {
-    const {comments, submitting, value} = this.state;
+    const storageComments = localStorage.getItem('commentsList')
+      ? JSON.parse(localStorage.getItem('commentsList'))
+      : [];
+    const {submitting, value} = this.state;
     const {films, filmPageId} = this.props;
+    const filterComments = storageComments.filter(item => item.uniq == filmPageId);
     console.log(films, 'films film-page');
     console.log(filmPageId, 'filmIDIDID film-page');
     const filterFilms = films.filter(item => item.id == filmPageId);
@@ -193,7 +204,7 @@ class FilmPage extends React.Component {
         </Layout>
         <div>
           <Title style={{marginLeft: '10px'}}>Comments</Title>
-          {comments.length > 0 && <CommentList comments={comments}/>}
+          {filterComments.length > 0 && <CommentList comments={filterComments}/>}
           <Comment
             content={
               <Editor
@@ -225,6 +236,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addFilmFavorite: item => dispatch(addFilmFavorite(item)),
     showAllFilms: url => dispatch(showAllFilms(url)),
+    addFilmFavoriteIsLogin: item => dispatch(addFilmFavoriteIsLogin(item)),
   }
 };
 
