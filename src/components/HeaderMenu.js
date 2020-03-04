@@ -13,6 +13,7 @@ import {
 } from 'react-router-dom';
 import {logoutStorage} from "../actions/Actions";
 import {connect} from "react-redux";
+import Profile from "./Profile";
 
 
 class HeaderMenu extends React.Component {
@@ -75,9 +76,9 @@ class HeaderMenu extends React.Component {
             <Link to='/favorite-page' style={linkStyle}>Favorite Films</Link>
           </Menu.Item>
           {localStorage.getItem('isLogin')
-            ? <Menu.Item key="face" style={{margin: '0 0 0 65.7%',}}>
+            ? <Menu.Item key="profile" style={{margin: '0 0 0 65.7%',}}>
               <Icon type="user"/>
-              <span>{returnLogin.login}</span>
+              <Link to='/profile' style={linkStyle}>{returnLogin.login}</Link>
             </Menu.Item>
             : null}
           {buttonTemplateLoginLogout()}
@@ -87,6 +88,7 @@ class HeaderMenu extends React.Component {
           <Route path='/' exact component={HomePage}/>
           <Route path='/film-page' component={FilmPage}/>
           <Route path='/login' component={Login}/>
+          <Route path='/profile' component={Profile}/>
         </Switch>
       </Router>
     );

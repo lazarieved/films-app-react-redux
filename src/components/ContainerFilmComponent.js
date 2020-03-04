@@ -10,7 +10,8 @@ import {connect} from 'react-redux'
 
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
-    this.props.showAllFilms('/show');
+    const {films, showAllFilms} = this.props;
+    if(!films.length){showAllFilms('/show');}
     const login = {
       login: 'ediked',
       password: '123qwe',
