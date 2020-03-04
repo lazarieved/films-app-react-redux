@@ -17,6 +17,7 @@ class ContainerFilmComponent extends React.Component {
       password: '123qwe',
       id: '7777777'
     };
+
     const loginStingify = JSON.stringify(login);
     localStorage.setItem('login', loginStingify);
     // var returnObj = JSON.parse(localStorage.getItem("login"));
