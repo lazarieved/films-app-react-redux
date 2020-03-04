@@ -2,7 +2,7 @@ import {
   ADD_FILM_FAVORITE,
   ADD_FILM_FAVORITE_IS_LOGIN,
   DELETE_FILM_FAVORITE,
-  DELETE_FILM_FAVORITE_IS_LOGIN,
+  DELETE_FILM_FAVORITE_IS_LOGIN, DELETE_WATCHED_FILM, DELETE_WATCHED_FILM_OFF,
   FILTER_FILMS,
   GET_FILM_ID,
   GET_FILMS_REQUEST,
@@ -10,7 +10,7 @@ import {
   GET_SEARCH_REQUEST,
   GET_SEARCH_SUCCESS,
   LOGIN,
-  LOGOUT,
+  LOGOUT, WATCHED_FILM,
 } from "../constants/constants";
 
 
@@ -21,13 +21,13 @@ const initialState = {
   filmPageId: 1,
   filterFilms: [],
   favoriteFilmsIsLogin: [],
+  watchedFilms: [],
 };
 
 
 export function containerReducer(state = initialState, action) {
   switch (action.type) {
     case GET_FILMS_SUCCESS:
-      console.log(action.payload, 'act.pay getfilm-success');
       return {
         ...state,
         films: [...state.films, ...action.payload.data]
@@ -38,7 +38,6 @@ export function containerReducer(state = initialState, action) {
         ...state,
       };
     case GET_SEARCH_SUCCESS:
-      console.log(action.payload, 'act.pay searchfilm-success');
       return {
         ...state,
         searchFilms: action.payload.data.map(item => item.show)
@@ -49,43 +48,36 @@ export function containerReducer(state = initialState, action) {
         ...state,
       };
     case ADD_FILM_FAVORITE:
-      console.log(action.payload, 'act.pay favoriteFilms');
       return {
         ...state,
         favoriteFilms: [...state.favoriteFilms, action.payload]
       };
     case DELETE_FILM_FAVORITE:
-      console.log(action.payload, 'act.pay favoriteFilms');
       return {
         ...state,
         favoriteFilms: [...state.favoriteFilms].filter(param => action.payload !== param.id)
       };
     case GET_FILM_ID:
-      console.log(action.payload, 'act.pay film-ID');
       return {
         ...state,
         filmPageId: action.payload
       };
     case FILTER_FILMS:
-      console.log(action.payload, 'act.pay filter-films');
       return {
         ...state,
         filterFilms: action.payload
       };
     case LOGIN:
-      console.log(action.payload, 'act.pay login');
       return {
         ...state,
         isLogin: action.payload
       };
     case LOGOUT:
-      console.log(action.payload, 'act.pay logout');
       return {
         ...state,
         isLogin: action.payload
       };
     case ADD_FILM_FAVORITE_IS_LOGIN:
-      console.log(action.payload, 'act.pay ADD_FILM_FAVORITE_IS_LOGIN');
       const storageList = localStorage.getItem('favoriteFilmsIsLogin');
       const list = storageList ? JSON.parse(storageList) : [];
       state.favoriteFilmsIsLogin.forEach(item => {
@@ -102,13 +94,41 @@ export function containerReducer(state = initialState, action) {
         favoriteFilmsIsLogin: [...state.favoriteFilmsIsLogin, action.payload]
       };
     case DELETE_FILM_FAVORITE_IS_LOGIN:
-      console.log(action.payload, 'act.pay DELETE_FILM_FAVORITE_IS_LOGIN');
       const getList = JSON.parse(localStorage.getItem('favoriteFilmsIsLogin'));
       const filterList = getList.filter(param => action.payload !== param.id);
       localStorage.setItem('favoriteFilmsIsLogin', JSON.stringify(filterList));
       return {
         ...state,
         favoriteFilmsIsLogin: [...state.favoriteFilmsIsLogin].filter(param => action.payload !== param.id)
+      };
+    case WATCHED_FILM:
+      const watchedList = localStorage.getItem('watchedFilms');
+      const list1 = watchedList ? JSON.parse(watchedList) : [];
+      state.watchedFilms.forEach(item => {
+        if (!list1.some(id => {
+          return id.id === item.id
+        })) {
+          list1.push(item)
+        }
+      });
+      const fullList1 = [...list1, action.payload];
+      localStorage.setItem('watchedFilms', JSON.stringify(fullList1));
+      return {
+        ...state,
+        watchedFilms: [...state.watchedFilms, action.payload]
+      };
+    case DELETE_WATCHED_FILM:
+      const watchedList1 = JSON.parse(localStorage.getItem('watchedFilms'));
+      const filterList1 = watchedList1.filter(param => action.payload !== param.id);
+      localStorage.setItem('watchedFilms', JSON.stringify(filterList1));
+      return {
+        ...state,
+        watchedFilms: [...state.watchedFilms].filter(param => action.payload !== param.id)
+      };
+    case DELETE_WATCHED_FILM_OFF:
+      return {
+        ...state,
+        watchedFilms: [...state.watchedFilms].filter(param => action.payload !== param.id)
       };
     default:
       return state;

@@ -2,7 +2,6 @@ import React from "react";
 import {Form, Input, Button} from 'antd';
 import {loginStorage} from "../actions/Actions";
 import {connect} from "react-redux";
-import {browserHistory} from "react-router";
 
 const layout = {
   labelCol: {span: 8},
@@ -22,27 +21,24 @@ class Login extends React.Component {
     this.setState({
       login: event.target.value
     });
-    console.log('Login:', event.target.value);
   };
   handleCheckPassword = event => {
     this.setState({
       password: event.target.value
     });
-    console.log('password:', event.target.value);
   };
   handleLoginClick = () => {
     const {login, password} = this.state;
+    const {loginStorage, history} = this.props;
     const returnLogin = JSON.parse(localStorage.getItem("login"));
     if (returnLogin.login == login && returnLogin.password == password) {
-      console.log('action change component');
-      this.props.loginStorage();
+      loginStorage();
       localStorage.setItem('isLogin', 'true');
       alert('Welcome:)');
-      this.props.history.push('/')
+      history.push('/')
     } else {
       alert('Login or password - incorrect')
     }
-    console.log(returnLogin, 'pars')
   };
 
   render() {
@@ -83,7 +79,6 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in LOGIN');
   const {
     containerReducer: {
       isLogin = false,

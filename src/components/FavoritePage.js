@@ -5,7 +5,11 @@ import {connect} from "react-redux";
 
 class FavoritePage extends React.Component {
   render() {
-    const {deleteFilmFavorite, favoriteFilms, deleteFilmFavoriteIsLogin} = this.props;
+    const {
+      deleteFilmFavorite,
+      favoriteFilms,
+      deleteFilmFavoriteIsLogin
+    } = this.props;
     const divStyle = {
       display: 'flex',
       flexDirection: 'column',
@@ -24,7 +28,6 @@ class FavoritePage extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in favoritePAGE');
   const {
     containerReducer: {
       favoriteFilms = [],

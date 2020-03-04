@@ -11,13 +11,14 @@ class SearchComponent extends React.Component {
       alignSelf: "flex-end",
       margin: '20px'
     };
+    const searchStyle = {width: 500};
     const {showSearchFilms} = this.props;
     return (
       <div style={divStyle}>
         <Search
           placeholder="Search"
           onSearch={value => showSearchFilms(value)}
-          style={{width: 500}}
+          style={searchStyle}
         />
       </div>
     );

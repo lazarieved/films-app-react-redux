@@ -4,14 +4,16 @@ import {
   addFilmFavorite,
   addFilmFavoriteIsLogin,
   getFilmId,
-  showAllFilms
+  showAllFilms, watchedFilm
 } from "../actions/Actions";
 import {connect} from 'react-redux'
 
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
     const {films, showAllFilms} = this.props;
-    if(!films.length){showAllFilms('/show');}
+    if (!films.length) {
+      showAllFilms('/show');
+    }
     const login = {
       login: 'ediked',
       password: '123qwe',
@@ -20,8 +22,6 @@ class ContainerFilmComponent extends React.Component {
 
     const loginStingify = JSON.stringify(login);
     localStorage.setItem('login', loginStingify);
-    // var returnObj = JSON.parse(localStorage.getItem("login"));
-    // console.log(returnObj, 'pars')
   }
 
   render() {
@@ -33,6 +33,9 @@ class ContainerFilmComponent extends React.Component {
       addFilmFavoriteIsLogin,
       filterFilms,
       favoriteFilmsIsLogin,
+      watchedFilms,
+      watchedFilm,
+
     } = this.props;
     return (
       <div>
@@ -44,6 +47,8 @@ class ContainerFilmComponent extends React.Component {
           addFilmFavorite={addFilmFavorite}
           getFilmId={getFilmId}
           addFilmFavoriteIsLogin={addFilmFavoriteIsLogin}
+          watchedFilm={watchedFilm}
+          watchedFilms={watchedFilms}
         />
       </div>
     );
@@ -51,7 +56,6 @@ class ContainerFilmComponent extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in container');
   const {
     containerReducer: {
       films = [],
@@ -60,6 +64,7 @@ const mapStateToProps = store => {
       filmPageId,
       filterFilms = [],
       favoriteFilmsIsLogin = [],
+      watchedFilms = [],
     }
   } = store;
   return {
@@ -68,7 +73,8 @@ const mapStateToProps = store => {
     favoriteFilms,
     filmPageId,
     filterFilms,
-    favoriteFilmsIsLogin
+    favoriteFilmsIsLogin,
+    watchedFilms,
   }
 };
 
@@ -78,6 +84,7 @@ const mapDispatchToProps = dispatch => {
     addFilmFavorite: item => dispatch(addFilmFavorite(item)),
     addFilmFavoriteIsLogin: item => dispatch(addFilmFavoriteIsLogin(item)),
     getFilmId: id => dispatch(getFilmId(id)),
+    watchedFilm: item => dispatch(watchedFilm(item)),
   }
 };
 

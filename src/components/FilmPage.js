@@ -1,5 +1,5 @@
 import React from "react";
-import {Layout, notification, Comment, Icon, Tooltip, Avatar, Typography, Form, List, Input} from 'antd';
+import {Layout, notification, Comment, Typography, Form, List, Input} from 'antd';
 import Button from "antd/es/button";
 import {addFilmFavorite, addFilmFavoriteIsLogin, showAllFilms} from "../actions/Actions";
 import {connect} from "react-redux";
@@ -114,25 +114,25 @@ class FilmPage extends React.Component {
     });
 
 
-      const { filmPageId} = this.props;
-      const storageComments = localStorage.getItem('commentsList');
-      const list = storageComments ? JSON.parse(storageComments) : [];
-      const login = JSON.parse(localStorage.getItem('login'));
-      const moveList = [
-        {
-          author: localStorage.getItem('isLogin') ? login.login: 'Anonymous',
-          avatar: 'https://clipartart.com/images/anonomus-clipart-dog.png',
-          content: this.state.value,
-          uniq: filmPageId,
-          datetime: moment().format("MMM Do YY"),
-        },
-        ...list,
-      ];
-      this.setState({
-        submitting: false,
-        value: '',
-      });
-      localStorage.setItem('commentsList', JSON.stringify(moveList));
+    const {filmPageId} = this.props;
+    const storageComments = localStorage.getItem('commentsList');
+    const list = storageComments ? JSON.parse(storageComments) : [];
+    const login = JSON.parse(localStorage.getItem('login'));
+    const moveList = [
+      {
+        author: localStorage.getItem('isLogin') ? login.login : 'Anonymous',
+        avatar: 'https://clipartart.com/images/anonomus-clipart-dog.png',
+        content: this.state.value,
+        uniq: filmPageId,
+        datetime: moment().format("MMM Do YY"),
+      },
+      ...list,
+    ];
+    this.setState({
+      submitting: false,
+      value: '',
+    });
+    localStorage.setItem('commentsList', JSON.stringify(moveList));
   };
 
   handleChange = e => {
@@ -156,8 +156,6 @@ class FilmPage extends React.Component {
     const {submitting, value} = this.state;
     const {films, filmPageId} = this.props;
     const filterComments = storageComments.filter(item => item.uniq == filmPageId);
-    console.log(films, 'films film-page');
-    console.log(filmPageId, 'filmIDIDID film-page');
     const filterFilms = films.filter(item => item.id == filmPageId);
     const filmItem = filterFilms[0] ? filterFilms[0] : demoItem;
     const demoImg = 'https://images.wallpaperscraft.ru/image/fon_nebo_tochki_svet_83482_300x168.jpg';
@@ -165,6 +163,7 @@ class FilmPage extends React.Component {
       width: '240px',
       margin: '4% 0 4% 25%'
     };
+    const titleStyle = {marginLeft: '10px'};
 
     return (
       <div>
@@ -203,7 +202,7 @@ class FilmPage extends React.Component {
           </Content>
         </Layout>
         <div>
-          <Title style={{marginLeft: '10px'}}>Comments</Title>
+          <Title style={titleStyle}>Comments</Title>
           {filterComments.length > 0 && <CommentList comments={filterComments}/>}
           <Comment
             content={
@@ -222,7 +221,6 @@ class FilmPage extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in film-page');
   const {
     containerReducer: {
       films = [],

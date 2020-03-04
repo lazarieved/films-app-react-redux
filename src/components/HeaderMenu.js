@@ -21,13 +21,13 @@ class HeaderMenu extends React.Component {
     current: 'mail',
   };
   handleClick = e => {
-    console.log('click ', e);
     this.setState({
       current: e.key,
     });
   };
   handleLogout = () => {
-    this.props.logoutStorage();
+    const {logoutStorage} = this.props;
+    logoutStorage();
     localStorage.removeItem('isLogin')
   };
 
@@ -36,13 +36,14 @@ class HeaderMenu extends React.Component {
     const linkStyle = {
       display: 'inline'
     };
+    const menuItemStyle81 = {margin: '0 0 0 81.6%',};
+    const menuItemStyle75 = {margin: '0 0 0 75.6%',};
     const returnLogin = JSON.parse(localStorage.getItem("login"));
-    console.log(this.props, 'props on headermenu');
     let buttonTemplateLoginLogout;
     if (!localStorage.getItem('isLogin')) {
       buttonTemplateLoginLogout = () => {
         return (
-          <Menu.Item key="login" style={{margin: '0 0 0 74.5%',}}>
+          <Menu.Item key="login" style={menuItemStyle81}>
             <Icon type="login"/>
             <Link to='/login' style={linkStyle}>Login</Link>
           </Menu.Item>
@@ -76,7 +77,7 @@ class HeaderMenu extends React.Component {
             <Link to='/favorite-page' style={linkStyle}>Favorite Films</Link>
           </Menu.Item>
           {localStorage.getItem('isLogin')
-            ? <Menu.Item key="profile" style={{margin: '0 0 0 65.7%',}}>
+            ? <Menu.Item key="profile" style={menuItemStyle75}>
               <Icon type="user"/>
               <Link to='/profile' style={linkStyle}>{returnLogin.login}</Link>
             </Menu.Item>
@@ -96,7 +97,6 @@ class HeaderMenu extends React.Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store, 'store in HeaderMenu');
   const {
     containerReducer: {
       isLogin = false,

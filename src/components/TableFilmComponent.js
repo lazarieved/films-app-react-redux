@@ -3,14 +3,8 @@ import renderHTML from 'react-render-html';
 import {Link} from "react-router-dom";
 import {getFilmId} from "../actions/Actions";
 import {connect} from "react-redux";
-import { Table, Input, Button, Icon } from 'antd';
+import {Table, Input, Button, Icon} from 'antd';
 import Highlighter from 'react-highlight-words';
-
-// const rowSelection = {
-//   onChange: (selectedRowKeys, selectedRows) => {
-//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-//   }
-// };
 
 class TableFilmComponent extends React.Component {
   state = {
@@ -20,8 +14,8 @@ class TableFilmComponent extends React.Component {
 
 
   getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div style={{ padding: 8 }}>
+    filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+      <div style={{padding: 8}}>
         <Input
           ref={node => {
             this.searchInput = node;
@@ -30,24 +24,24 @@ class TableFilmComponent extends React.Component {
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{width: 188, marginBottom: 8, display: 'block'}}
         />
         <Button
           type="primary"
           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
           icon='search'
           size="small"
-          style={{ width: 90, marginRight: 8 }}
+          style={{width: 90, marginRight: 8}}
         >
           Search
         </Button>
-        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{width: 90}}>
           Reset
         </Button>
       </div>
     ),
     filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+      <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -62,7 +56,7 @@ class TableFilmComponent extends React.Component {
     render: text =>
       this.state.searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
           searchWords={[this.state.searchText]}
           autoEscape
           textToHighlight={text.toString()}
@@ -81,14 +75,14 @@ class TableFilmComponent extends React.Component {
   };
   handleReset = clearFilters => {
     clearFilters();
-    this.setState({ searchText: '' });
+    this.setState({searchText: ''});
   };
 
   columns = [
     {
       title: 'Name', dataIndex: 'name', key: 'name',
-      render: (text, item) => <Link to='/film-page'><p onClick={this.handleClick(item)}>{text}</p></Link>,
       ...this.getColumnSearchProps('name'),
+      render: (text, item) => <Link to='/film-page'><p onClick={this.handleClick(item)}>{text}</p></Link>,
     },
     {
       title: 'Genres', dataIndex: 'genres', key: 'genres',
@@ -115,27 +109,28 @@ class TableFilmComponent extends React.Component {
       render: (record) => <Button
         type="ghost"
         onClick={() => {
-          this.props.deleteFilmFavorite(record.id);
-          this.props.deleteFilmFavoriteIsLogin(record.id)
+          const {deleteFilmFavorite, deleteFilmFavoriteIsLogin} = this.props;
+          deleteFilmFavorite(record.id);
+          deleteFilmFavoriteIsLogin(record.id)
         }}
         style={{color: "red"}}>Delete</Button>,
     },
   ];
   handleClick = item => () => {
-    this.props.getFilmId(item.id);
+    const {getFilmId} = this.props;
+    getFilmId(item.id);
   };
 
   render() {
     const {favoriteFilms} = this.props;
     const storageList = JSON.parse(localStorage.getItem('favoriteFilmsIsLogin'));
-
+    const pStyle = {margin: 0};
     return (
       <div>
         <Table
-          // rowSelection={rowSelection}
           tableLayout={'fixed'}
           columns={this.columns}
-          expandedRowRender={record => <p style={{margin: 0}}>{renderHTML(record.summary)}</p>}
+          expandedRowRender={record => <p style={pStyle}>{renderHTML(record.summary)}</p>}
           dataSource={localStorage.getItem('isLogin') ? storageList : favoriteFilms}
         />
       </div>
@@ -147,9 +142,10 @@ const mapStateToProps = store => {
   const {
     containerReducer: {
       films = [],
+      getFilmId,
     }
   } = store;
-  return {films}
+  return {films, getFilmId}
 };
 
 const mapDispatchToProps = dispatch => {

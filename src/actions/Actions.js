@@ -3,7 +3,7 @@ import {
   ADD_FILM_FAVORITE,
   ADD_FILM_FAVORITE_IS_LOGIN,
   DELETE_FILM_FAVORITE,
-  DELETE_FILM_FAVORITE_IS_LOGIN,
+  DELETE_FILM_FAVORITE_IS_LOGIN, DELETE_WATCHED_FILM, DELETE_WATCHED_FILM_OFF,
   FILTER_FILMS,
   GET_FILM_ID,
   GET_FILMS_FAILED,
@@ -13,7 +13,7 @@ import {
   GET_SEARCH_REQUEST,
   GET_SEARCH_SUCCESS,
   LOGIN,
-  LOGOUT,
+  LOGOUT, WATCHED_FILM,
 } from "../constants/constants";
 
 
@@ -77,6 +77,24 @@ export const addFilmFavoriteIsLogin = (item) => {
 export const deleteFilmFavoriteIsLogin = (item) => {
   return {
     type: DELETE_FILM_FAVORITE_IS_LOGIN,
+    payload: item,
+  }
+};
+export const watchedFilm = (item) => {
+  return {
+    type: WATCHED_FILM,
+    payload: item,
+  }
+};
+export const deleteWatchedFilm = (item) => {
+  return {
+    type: DELETE_WATCHED_FILM,
+    payload: item,
+  }
+};
+export const deleteWatchedFilmOff = (item) => {
+  return {
+    type: DELETE_WATCHED_FILM_OFF,
     payload: item,
   }
 };

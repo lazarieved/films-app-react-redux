@@ -24,12 +24,17 @@ class FilmComponent extends React.Component {
     }
     openNotificationWithIcon();
   };
+  handleClickWatched = item => () => {
+    const {watchedFilm,} = this.props;
+    watchedFilm(item);
+    openNotificationWithIcon();
+  };
   handleGetId = item => () => {
     this.props.getFilmId(item.id);
   };
 
   render() {
-    console.log(this.props, 'film props');
+
     const {
       films,
       searchFilms,
@@ -50,6 +55,14 @@ class FilmComponent extends React.Component {
       height: '306px'
     };
     const demoImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Oleksa_Slisarenko_%281928%29.jpg/218px-Oleksa_Slisarenko_%281928%29.jpg';
+    const listItemStyle = {
+      padding: "20px"
+    };
+    const buttonStyle = {
+      width: '105px',
+      padding: '0'
+    };
+    const rateStyle = {marginLeft: '10%'};
 
     return (
       <List
@@ -60,7 +73,7 @@ class FilmComponent extends React.Component {
           md: 4,
           lg: 4,
           xl: 4,
-          xxl: 3,
+          xxl: 5,
         }}
         dataSource={filmItems()}
         pagination={
@@ -70,13 +83,11 @@ class FilmComponent extends React.Component {
           }
         }
         renderItem={item => (
-          <List.Item style={{
-            padding: "20px"
-          }}>
+          <List.Item style={listItemStyle}>
             <Card
               onClick={this.handleGetId(item)}
               hoverable
-              style={{width: 220}}
+              style={{width: 240}}
               data={item}
               cover={<Link to='/film-page'>
                 <img style={imgStyle}
@@ -86,14 +97,26 @@ class FilmComponent extends React.Component {
                 />
               </Link>}
               actions={[
-                <Button type="primary" onClick={this.handleClick(item)}>Add to favorite</Button>,
+                <Button
+                  type="primary"
+                  style={buttonStyle}
+                  onClick={this.handleClick(item)}>Add to favorite</Button>,
+                localStorage.getItem('isLogin')
+                  ? <Button
+                    type="primary"
+                    style={buttonStyle}
+                    onClick={this.handleClickWatched(item)}>Add to watched</Button>
+                  : <Button
+                    disabled
+                    type="primary"
+                    style={buttonStyle}>Add to watched</Button>,
               ]}
             >
               <Link to='/film-page'>
                 <Meta title={item.name}
                       description={
                         <Rate
-                          style={{marginLeft: '10%'}}
+                          style={rateStyle}
                           allowHalf
                           defaultValue={item.rating ? (item.rating.average / 2) : 1}
                           disabled
