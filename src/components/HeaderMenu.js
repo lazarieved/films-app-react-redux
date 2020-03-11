@@ -20,11 +20,13 @@ class HeaderMenu extends React.Component {
   state = {
     current: 'mail',
   };
+
   handleClick = e => {
     this.setState({
       current: e.key,
     });
   };
+
   handleLogout = () => {
     const {logoutStorage} = this.props;
     logoutStorage();
@@ -36,16 +38,17 @@ class HeaderMenu extends React.Component {
     const linkStyle = {
       display: 'inline'
     };
-    const menuItemStyle81 = {margin: '0 0 0 81.6%',};
-    const menuItemStyle75 = {margin: '0 0 0 75.6%',};
-    const returnLogin = JSON.parse(localStorage.getItem("login"));
+    const menuItemStyle81 = {margin: '0 0 0 73.6%',};
+    const menuItemStyle75 = {margin: '0 0 0 65.6%',};
+    const returnLogin = JSON.parse(localStorage.getItem('login'));
     let buttonTemplateLoginLogout;
+
     if (!localStorage.getItem('isLogin')) {
       buttonTemplateLoginLogout = () => {
         return (
           <Menu.Item key="login" style={menuItemStyle81}>
-            <Icon type="login"/>
-            <Link to='/login' style={linkStyle}>Login</Link>
+            <Icon type="login" />
+            <Link to="/login" style={linkStyle}>Login</Link>
           </Menu.Item>
         )
       }
@@ -53,8 +56,8 @@ class HeaderMenu extends React.Component {
       buttonTemplateLoginLogout = () => {
         return (
           <Menu.Item key="logout">
-            <Icon type="logout"/>
-            <Link to='/login' style={linkStyle} onClick={this.handleLogout}>Logout</Link>
+            <Icon type="logout" />
+            <Link to="/login" style={linkStyle} onClick={this.handleLogout}>Logout</Link>
           </Menu.Item>
         )
       }
@@ -69,27 +72,27 @@ class HeaderMenu extends React.Component {
           mode="horizontal"
         >
           <Menu.Item key="home">
-            <Icon type="home"/>
-            <Link to='/' style={linkStyle}>Home</Link>
+            <Icon type="home" />
+            <Link to="/" style={linkStyle}>Home</Link>
           </Menu.Item>
           <Menu.Item key="favorite">
-            <Icon type="star"/>
-            <Link to='/favorite-page' style={linkStyle}>Favorite Films</Link>
+            <Icon type="star" />
+            <Link to="/favorite-page" style={linkStyle}>Favorite Films</Link>
           </Menu.Item>
           {localStorage.getItem('isLogin')
-            ? <Menu.Item key="profile" style={menuItemStyle75}>
-              <Icon type="user"/>
-              <Link to='/profile' style={linkStyle}>{returnLogin.login}</Link>
+              ? <Menu.Item key="profile" style={menuItemStyle75}>
+              <Icon type="user" />
+              <Link to="/profile" style={linkStyle}>{returnLogin.login}</Link>
             </Menu.Item>
             : null}
           {buttonTemplateLoginLogout()}
         </Menu>
         <Switch>
-          <Route path='/favorite-page' component={FavoritePage}/>
-          <Route path='/' exact component={HomePage}/>
-          <Route path='/film-page' component={FilmPage}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/profile' component={Profile}/>
+          <Route path="/favorite-page" component={FavoritePage} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/film-page" component={FilmPage} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       </Router>
     );
@@ -102,6 +105,7 @@ const mapStateToProps = store => {
       isLogin = false,
     }
   } = store;
+
   return {isLogin}
 };
 
@@ -115,4 +119,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HeaderMenu);
-

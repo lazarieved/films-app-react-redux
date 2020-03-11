@@ -24,62 +24,70 @@ const initialState = {
   watchedFilms: [],
 };
 
-
 export function containerReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_FILMS_SUCCESS:
+    case GET_FILMS_SUCCESS: {
       return {
         ...state,
         films: [...state.films, ...action.payload.data]
       };
-    case GET_FILMS_REQUEST:
-      console.log(action);
+    }
+    case GET_FILMS_REQUEST: {
       return {
         ...state,
       };
-    case GET_SEARCH_SUCCESS:
+    }
+    case GET_SEARCH_SUCCESS: {
       return {
         ...state,
         searchFilms: action.payload.data.map(item => item.show)
       };
-    case GET_SEARCH_REQUEST:
-      console.log(action);
+    }
+    case GET_SEARCH_REQUEST: {
       return {
         ...state,
       };
-    case ADD_FILM_FAVORITE:
+    }
+    case ADD_FILM_FAVORITE: {
       return {
         ...state,
         favoriteFilms: [...state.favoriteFilms, action.payload]
       };
-    case DELETE_FILM_FAVORITE:
+    }
+    case DELETE_FILM_FAVORITE: {
       return {
         ...state,
         favoriteFilms: [...state.favoriteFilms].filter(param => action.payload !== param.id)
       };
-    case GET_FILM_ID:
+    }
+    case GET_FILM_ID: {
       return {
         ...state,
         filmPageId: action.payload
       };
-    case FILTER_FILMS:
+    }
+    case FILTER_FILMS: {
       return {
         ...state,
         filterFilms: action.payload
       };
-    case LOGIN:
+    }
+    case LOGIN: {
       return {
         ...state,
         isLogin: action.payload
       };
-    case LOGOUT:
+    }
+    case LOGOUT: {
       return {
         ...state,
         isLogin: action.payload
       };
-    case ADD_FILM_FAVORITE_IS_LOGIN:
+    }
+    case ADD_FILM_FAVORITE_IS_LOGIN: {
       const storageList = localStorage.getItem('favoriteFilmsIsLogin');
       const list = storageList ? JSON.parse(storageList) : [];
+
       state.favoriteFilmsIsLogin.forEach(item => {
         if (!list.some(id => {
           return id.id === item.id
@@ -87,23 +95,29 @@ export function containerReducer(state = initialState, action) {
           list.push(item)
         }
       });
+
       const fullList = [...list, action.payload];
       localStorage.setItem('favoriteFilmsIsLogin', JSON.stringify(fullList));
+
       return {
         ...state,
         favoriteFilmsIsLogin: [...state.favoriteFilmsIsLogin, action.payload]
       };
-    case DELETE_FILM_FAVORITE_IS_LOGIN:
+    }
+    case DELETE_FILM_FAVORITE_IS_LOGIN: {
       const getList = JSON.parse(localStorage.getItem('favoriteFilmsIsLogin'));
       const filterList = getList.filter(param => action.payload !== param.id);
       localStorage.setItem('favoriteFilmsIsLogin', JSON.stringify(filterList));
+
       return {
         ...state,
         favoriteFilmsIsLogin: [...state.favoriteFilmsIsLogin].filter(param => action.payload !== param.id)
       };
-    case WATCHED_FILM:
+    }
+    case WATCHED_FILM: {
       const watchedList = localStorage.getItem('watchedFilms');
       const list1 = watchedList ? JSON.parse(watchedList) : [];
+
       state.watchedFilms.forEach(item => {
         if (!list1.some(id => {
           return id.id === item.id
@@ -111,25 +125,31 @@ export function containerReducer(state = initialState, action) {
           list1.push(item)
         }
       });
+
       const fullList1 = [...list1, action.payload];
       localStorage.setItem('watchedFilms', JSON.stringify(fullList1));
+
       return {
         ...state,
         watchedFilms: [...state.watchedFilms, action.payload]
       };
-    case DELETE_WATCHED_FILM:
+    }
+    case DELETE_WATCHED_FILM: {
       const watchedList1 = JSON.parse(localStorage.getItem('watchedFilms'));
       const filterList1 = watchedList1.filter(param => action.payload !== param.id);
       localStorage.setItem('watchedFilms', JSON.stringify(filterList1));
+
       return {
         ...state,
         watchedFilms: [...state.watchedFilms].filter(param => action.payload !== param.id)
       };
-    case DELETE_WATCHED_FILM_OFF:
+    }
+    case DELETE_WATCHED_FILM_OFF: {
       return {
         ...state,
         watchedFilms: [...state.watchedFilms].filter(param => action.payload !== param.id)
       };
+    }
     default:
       return state;
   }

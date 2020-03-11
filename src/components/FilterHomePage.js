@@ -91,24 +91,28 @@ class FilterHomePage extends React.Component {
   state = {
     size: 'default',
   };
+
   handleChangeCounrty = (value) => {
     const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.country.name === value);
     filterFilms(filteredFilms);
   };
+
   handleChangeCompany = (value) => {
     const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.network.name === value);
     filterFilms(filteredFilms);
   };
+
   handleChangeDates = (value) => {
     const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
     let filteredFilms = correctFilms.filter(item => item.premiered.slice(0, 4) === value);
     filterFilms(filteredFilms);
   };
+
   handleChangeGenres = (value) => {
     const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.premiered && item.network && item.network.country != null);
@@ -119,6 +123,7 @@ class FilterHomePage extends React.Component {
     });
     filterFilms(filteredFilms);
   };
+
 ///////////////////////////// другой вариант фильтра по жанру
   // handleChangeGenres = (value) => {
   // const { films, filterFilms } = this.props;
@@ -148,6 +153,7 @@ class FilterHomePage extends React.Component {
     });
     filterFilms(correctFilms);
   };
+
   handleClickDown = () => {
     const {films, filterFilms} = this.props;
     let correctFilms = films.filter(item => item.rating != null);
@@ -163,7 +169,6 @@ class FilterHomePage extends React.Component {
     filterFilms(correctFilms);
   };
 
-
   render() {
     const {size} = this.state;
     const mainSelectStyle = {
@@ -177,6 +182,7 @@ class FilterHomePage extends React.Component {
       width: '100%',
       marginBottom: '15px'
     };
+
     return (
       <div>
         <Title level={3}>Filters</Title>
@@ -223,12 +229,12 @@ class FilterHomePage extends React.Component {
         <Button type="primary"
                 onClick={this.handleClickTop}
                 style={buttonStyle}
-        >Show top rating</Button>
+        >Show top rating 🠉</Button>
         <br/>
         <Button type="primary"
                 onClick={this.handleClickDown}
                 style={buttonStyle}
-        >Show down rating</Button>
+        >Show down rating 🠋</Button>
       </div>
     );
   }
@@ -241,6 +247,7 @@ const mapStateToProps = store => {
       filmPageId,
     }
   } = store;
+
   return {films, filmPageId}
 };
 

@@ -4,14 +4,10 @@ import HeaderMenu from "./HeaderMenu";
 import Api from "../api/Api";
 
 class App extends React.Component {
-  componentDidMount() {
-    console.log(this.props, 'app props')
-  }
-
   render() {
     return (
       <div>
-        <HeaderMenu api={Api}/>
+        <HeaderMenu api={Api} />
       </div>
     );
   }

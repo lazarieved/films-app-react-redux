@@ -12,6 +12,11 @@ class TableFilmComponent extends React.Component {
     searchedColumn: '',
   };
 
+  stiles = {
+    inputStyle: {width: 188, marginBottom: 8, display: 'block'},
+    buttonStyle1: {width: 90, marginRight: 8},
+    buttonStyle2: {width: 90},
+  };
 
   getColumnSearchProps = dataIndex => ({
     filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
@@ -24,18 +29,18 @@ class TableFilmComponent extends React.Component {
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{width: 188, marginBottom: 8, display: 'block'}}
+          style={this.stiles.inputStyle}
         />
         <Button
           type="primary"
           onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
           icon='search'
           size="small"
-          style={{width: 90, marginRight: 8}}
+          style={this.stiles.buttonStyle1}
         >
           Search
         </Button>
-        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{width: 90}}>
+        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={this.stiles.buttonStyle2}>
           Reset
         </Button>
       </div>
@@ -73,6 +78,7 @@ class TableFilmComponent extends React.Component {
       searchedColumn: dataIndex,
     });
   };
+
   handleReset = clearFilters => {
     clearFilters();
     this.setState({searchText: ''});
@@ -82,7 +88,7 @@ class TableFilmComponent extends React.Component {
     {
       title: 'Name', dataIndex: 'name', key: 'name',
       ...this.getColumnSearchProps('name'),
-      render: (text, item) => <Link to='/film-page'><p onClick={this.handleClick(item)}>{text}</p></Link>,
+      render: (text, item) => <Link to="/film-page"><p onClick={this.handleClick(item)}>{text}</p></Link>,
     },
     {
       title: 'Genres', dataIndex: 'genres', key: 'genres',
@@ -113,9 +119,10 @@ class TableFilmComponent extends React.Component {
           deleteFilmFavorite(record.id);
           deleteFilmFavoriteIsLogin(record.id)
         }}
-        style={{color: "red"}}>Delete</Button>,
+        style={{color: 'red'}}>Delete</Button>,
     },
   ];
+
   handleClick = item => () => {
     const {getFilmId} = this.props;
     getFilmId(item.id);
@@ -125,6 +132,7 @@ class TableFilmComponent extends React.Component {
     const {favoriteFilms} = this.props;
     const storageList = JSON.parse(localStorage.getItem('favoriteFilmsIsLogin'));
     const pStyle = {margin: 0};
+
     return (
       <div>
         <Table
@@ -145,6 +153,7 @@ const mapStateToProps = store => {
       getFilmId,
     }
   } = store;
+
   return {films, getFilmId}
 };
 
@@ -158,4 +167,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(TableFilmComponent);
-

@@ -16,25 +16,26 @@ const openNotificationWithIcon = type => {
 class FilmComponent extends React.Component {
   handleClick = item => () => {
     const {addFilmFavorite, addFilmFavoriteIsLogin, favoriteFilmsIsLogin} = this.props;
+
     if (localStorage.getItem('isLogin')) {
       addFilmFavoriteIsLogin(item);
-
     } else {
       addFilmFavorite(item);
     }
     openNotificationWithIcon();
   };
+
   handleClickWatched = item => () => {
     const {watchedFilm,} = this.props;
     watchedFilm(item);
     openNotificationWithIcon();
   };
+
   handleGetId = item => () => {
     this.props.getFilmId(item.id);
   };
 
   render() {
-
     const {
       films,
       searchFilms,
@@ -50,13 +51,13 @@ class FilmComponent extends React.Component {
       }
     };
     const imgStyle = {
-      width: "100%",
+      width: '100%',
       overflow: 'hidden',
       height: '306px'
     };
     const demoImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Oleksa_Slisarenko_%281928%29.jpg/218px-Oleksa_Slisarenko_%281928%29.jpg';
     const listItemStyle = {
-      padding: "20px"
+      padding: '20px'
     };
     const buttonStyle = {
       width: '105px',
@@ -89,7 +90,7 @@ class FilmComponent extends React.Component {
               hoverable
               style={{width: 240}}
               data={item}
-              cover={<Link to='/film-page'>
+              cover={<Link to="/film-page">
                 <img style={imgStyle}
                      src={item.image
                        ? item.image.medium
@@ -112,7 +113,7 @@ class FilmComponent extends React.Component {
                     style={buttonStyle}>Add to watched</Button>,
               ]}
             >
-              <Link to='/film-page'>
+              <Link to="/film-page">
                 <Meta title={item.name}
                       description={
                         <Rate
@@ -121,7 +122,8 @@ class FilmComponent extends React.Component {
                           defaultValue={item.rating ? (item.rating.average / 2) : 1}
                           disabled
                         />}
-                /></Link>
+                />
+              </Link>
             </Card>
           </List.Item>
         )}

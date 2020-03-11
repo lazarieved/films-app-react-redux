@@ -4,11 +4,10 @@ import {Link} from "react-router-dom";
 import renderHTML from "react-render-html";
 
 class ProfileTable extends React.Component {
-
   columns = [
     {
       title: 'Name', dataIndex: 'name', key: 'name',
-      render: (text, item) => <Link to='/film-page'><p onClick={this.handleClick(item)}>{text}</p></Link>,
+      render: (text, item) => <Link to="/film-page"><p onClick={this.handleClick(item)}>{text}</p></Link>,
     },
     {
       title: 'Rating', dataIndex: 'rating', key: 'rating',
@@ -23,12 +22,14 @@ class ProfileTable extends React.Component {
       render: (record) => <Button
         type="ghost"
         onClick={this.handleClickDel(record)}
-        style={{color: "red"}}>Delete</Button>,
+        style={{color: 'red', width: '150px', margin: '0 0 0 35px'}}>Delete</Button>,
     },
   ];
+
   handleClick = item => () => {
     this.props.getFilmId(item.id);
   };
+
   handleClickDel = record => () => {
     const {deleteWatchedFilm, deleteWatchedFilmOff} = this.props;
     deleteWatchedFilm(record.id);
@@ -40,6 +41,7 @@ class ProfileTable extends React.Component {
     const watchedList = localStorage.getItem('watchedFilms');
     const list = watchedList ? JSON.parse(watchedList) : [];
     const pStyle = {margin: 0};
+
     return (
       <div>
         <Table

@@ -7,7 +7,6 @@ class Api {
 
   showAllFilms = (url, types, dispatch) => handle(types, url, dispatch);
   showSearchFilms = (url, types, dispatch, params) => handle(types, url, dispatch, params);
-
 }
 
 export default new Api();
@@ -16,6 +15,7 @@ const handle = (types, url, dispatch, params = {}) => {
   let config = {
     params
   };
+
   dispatch({
     type: typeByStatus(types, 'REQUEST'),
   });

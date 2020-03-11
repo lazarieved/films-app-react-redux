@@ -7,6 +7,7 @@ const layout = {
   labelCol: {span: 8},
   wrapperCol: {span: 16},
 };
+
 const tailLayout = {
   wrapperCol: {offset: 8, span: 16},
 };
@@ -22,15 +23,17 @@ class Login extends React.Component {
       login: event.target.value
     });
   };
+
   handleCheckPassword = event => {
     this.setState({
       password: event.target.value
     });
   };
+
   handleLoginClick = () => {
     const {login, password} = this.state;
     const {loginStorage, history} = this.props;
-    const returnLogin = JSON.parse(localStorage.getItem("login"));
+    const returnLogin = JSON.parse(localStorage.getItem('login'));
     if (returnLogin.login == login && returnLogin.password == password) {
       loginStorage();
       localStorage.setItem('isLogin', 'true');
@@ -42,11 +45,13 @@ class Login extends React.Component {
   };
 
   render() {
+    const divStyle = {
+      width: '500px',
+      margin: '150px auto 50px auto'
+    };
+
     return (
-      <div style={{
-        width: '500px',
-        margin: '150px auto 50px auto'
-      }}>
+      <div style={divStyle}>
         <Form
           {...layout}
           name="basic"
@@ -56,7 +61,7 @@ class Login extends React.Component {
             name="username"
             rules={[{required: true, message: 'Please input your username!'}]}
           >
-            <Input placeholder="Username" onChange={this.handleCheckLogin}/>
+            <Input placeholder="Username" onChange={this.handleCheckLogin} />
           </Form.Item>
 
           <Form.Item
@@ -64,7 +69,7 @@ class Login extends React.Component {
             name="password"
             rules={[{required: true, message: 'Please input your password!'}]}
           >
-            <Input.Password placeholder="Password" onChange={this.handleCheckPassword}/>
+            <Input.Password placeholder="Password" onChange={this.handleCheckPassword} />
           </Form.Item>
 
           <Form.Item {...tailLayout}>
@@ -84,6 +89,7 @@ const mapStateToProps = store => {
       isLogin = false,
     }
   } = store;
+
   return {isLogin}
 };
 
@@ -97,4 +103,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Login);
-

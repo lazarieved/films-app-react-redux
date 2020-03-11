@@ -8,11 +8,12 @@ const {Search} = Input;
 class SearchComponent extends React.Component {
   render() {
     const divStyle = {
-      alignSelf: "flex-end",
+      alignSelf: 'flex-end',
       margin: '20px'
     };
     const searchStyle = {width: 500};
     const {showSearchFilms} = this.props;
+
     return (
       <div style={divStyle}>
         <Search
@@ -32,6 +33,7 @@ const mapStateToProps = store => {
       searchFilms = [],
     }
   } = store;
+
   return {films, searchFilms}
 };
 
@@ -45,5 +47,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SearchComponent);
-
-

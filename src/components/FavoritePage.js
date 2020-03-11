@@ -15,6 +15,7 @@ class FavoritePage extends React.Component {
       flexDirection: 'column',
       alignItems: "center"
     };
+
     return (
       <div style={divStyle}>
         <TableFilmComponent
@@ -33,6 +34,7 @@ const mapStateToProps = store => {
       favoriteFilms = [],
     }
   } = store;
+
   return {favoriteFilms}
 };
 

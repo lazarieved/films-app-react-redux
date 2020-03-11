@@ -11,57 +11,57 @@ const {TextArea} = Input;
 const {Sider, Content} = Layout;
 
 const demoItem = {
-  "id": 1,
-  "url": "http://www.tvmaze.com/shows/1/under-the-dome",
-  "name": "Under the Dome",
-  "type": "Scripted",
-  "language": "English",
-  "genres": [
+  id: 1,
+  url: "http://www.tvmaze.com/shows/1/under-the-dome",
+  name: "Under the Dome",
+  type: "Scripted",
+  language: "English",
+  genres: [
     "Drama",
     "Science-Fiction",
     "Thriller"
   ],
-  "status": "Ended",
-  "runtime": 60,
-  "premiered": "2013-06-24",
-  "officialSite": "http://www.cbs.com/shows/under-the-dome/",
-  "schedule": {
-    "time": "22:00",
-    "days": [
+  status: "Ended",
+  runtime: 60,
+  premiered: "2013-06-24",
+  officialSite: "http://www.cbs.com/shows/under-the-dome/",
+  schedule: {
+    time: "22:00",
+    days: [
       "Thursday"
     ]
   },
-  "rating": {
-    "average": 6.5
+  rating: {
+    average: 6.5
   },
-  "weight": 88,
-  "network": {
-    "id": 2,
-    "name": "CBS",
-    "country": {
-      "name": "United States",
-      "code": "US",
-      "timezone": "America/New_York"
+  weight: 88,
+  network: {
+    id: 2,
+    name: "CBS",
+    country: {
+      name: "United States",
+      code: "US",
+      timezone: "America/New_York"
     }
   },
-  "webChannel": null,
-  "externals": {
-    "tvrage": 25988,
-    "thetvdb": 264492,
-    "imdb": "tt1553656"
+  webChannel: null,
+  externals: {
+    tvrage: 25988,
+    thetvdb: 264492,
+    imdb: "tt1553656"
   },
-  "image": {
-    "medium": "http://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-    "original": "http://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+  image: {
+    medium: "http://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+    original: "http://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
   },
-  "summary": "<p><b>Under the Dome</b> is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome. The town's inhabitants must deal with surviving the post-apocalyptic conditions while searching for answers about the dome, where it came from and if and when it will go away.</p>",
-  "updated": 1573667713,
-  "_links": {
-    "self": {
-      "href": "http://api.tvmaze.com/shows/1"
+  summary: "<p><b>Under the Dome</b> is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome. The town's inhabitants must deal with surviving the post-apocalyptic conditions while searching for answers about the dome, where it came from and if and when it will go away.</p>",
+  updated: 1573667713,
+  _links: {
+    self: {
+      href: "http://api.tvmaze.com/shows/1"
     },
-    "previousepisode": {
-      "href": "http://api.tvmaze.com/episodes/185054"
+    previousepisode: {
+      href: "http://api.tvmaze.com/episodes/185054"
     }
   }
 };
@@ -97,7 +97,6 @@ const Editor = ({onChange, onSubmit, submitting, value}) => (
 );
 
 class FilmPage extends React.Component {
-
   state = {
     comments: [],
     submitting: false,
@@ -108,11 +107,9 @@ class FilmPage extends React.Component {
     if (!this.state.value) {
       return;
     }
-
     this.setState({
       submitting: true,
     });
-
 
     const {filmPageId} = this.props;
     const storageComments = localStorage.getItem('commentsList');
@@ -128,6 +125,7 @@ class FilmPage extends React.Component {
       },
       ...list,
     ];
+
     this.setState({
       submitting: false,
       value: '',
@@ -140,7 +138,6 @@ class FilmPage extends React.Component {
       value: e.target.value,
     });
   };
-
 
   handleClick = item => () => {
     const {addFilmFavorite, addFilmFavoriteIsLogin} = this.props;
@@ -168,16 +165,16 @@ class FilmPage extends React.Component {
     return (
       <div>
         <Layout>
-          <Sider theme='light' width={"auto"}>
-            <div className='sider-film-page'>
+          <Sider theme="light" width={"auto"}>
+            <div className="sider-film-page">
               <Title>{filmItem.name}</Title>
               {filmItem.image
                 ? <img
-                  alt='text'
+                  alt="text"
                   src={filmItem.image.medium}
                   style={imgStyle}
                 />
-                : <img alt='text' src={demoImg}
+                : <img alt="text" src={demoImg}
                        style={imgStyle}
                 />}
               <Button type="primary"
@@ -187,23 +184,23 @@ class FilmPage extends React.Component {
             </div>
           </Sider>
           <Content>
-            <div className='sider-film-page content-film-page'>
-              <p className='p-film-page'><b>Genres: </b>{filmItem.genres ? filmItem.genres.join(', ') : 'unknown'}</p>
-              <p className='p-film-page'><b>Language: </b>{filmItem.language}</p>
-              <p className='p-film-page'><b>Runtime: </b>{filmItem.runtime}</p>
-              <p className='p-film-page'><b>Premiered: </b>{filmItem.premiered}</p>
-              <p className='p-film-page'><b>Company: </b>{filmItem.network ? filmItem.network.name : filmItem.network}
+            <div className="sider-film-page content-film-page">
+              <p className="p-film-page"><b>Genres: </b>{filmItem.genres ? filmItem.genres.join(', ') : 'unknown'}</p>
+              <p className="p-film-page"><b>Language: </b>{filmItem.language}</p>
+              <p className="p-film-page"><b>Runtime: </b>{filmItem.runtime}</p>
+              <p className="p-film-page"><b>Premiered: </b>{filmItem.premiered}</p>
+              <p className="p-film-page"><b>Company: </b>{filmItem.network ? filmItem.network.name : filmItem.network}
               </p>
-              <p className='p-film-page'><b>Rating: </b>{filmItem.rating ? filmItem.rating.average : 'unknown'}</p>
-              <p className='p-film-page'><b>Type: </b>{filmItem.type}</p>
-              <p className='p-film-page'><b>Origin Link: </b><a href={filmItem.url}>{filmItem.url}</a></p>
-              <p className='p-film-page'><b>Description: </b>{renderHTML(filmItem.summary)}</p>
+              <p className="p-film-page"><b>Rating: </b>{filmItem.rating ? filmItem.rating.average : 'unknown'}</p>
+              <p className="p-film-page"><b>Type: </b>{filmItem.type}</p>
+              <p className="p-film-page"><b>Origin Link: </b><a href={filmItem.url}>{filmItem.url}</a></p>
+              <p className="p-film-page"><b>Description: </b>{renderHTML(filmItem.summary)}</p>
             </div>
           </Content>
         </Layout>
         <div>
           <Title style={titleStyle}>Comments</Title>
-          {filterComments.length > 0 && <CommentList comments={filterComments}/>}
+          {filterComments.length > 0 && <CommentList comments={filterComments} />}
           <Comment
             content={
               <Editor
@@ -227,6 +224,7 @@ const mapStateToProps = store => {
       filmPageId,
     }
   } = store;
+
   return {films, filmPageId}
 };
 
@@ -242,4 +240,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(FilmPage);
-

@@ -19,6 +19,7 @@ import {
 
 export const showAllFilms = url => dispatch => {
   const types = [GET_FILMS_REQUEST, GET_FILMS_SUCCESS, GET_FILMS_FAILED];
+
   return Api.showAllFilms(url, types, dispatch)
 };
 
@@ -27,6 +28,7 @@ export const showSearchFilms = searchValue => dispatch => {
     q: searchValue,
   };
   const types = [GET_SEARCH_REQUEST, GET_SEARCH_SUCCESS, GET_SEARCH_FAILED];
+
   return Api.showSearchFilms('/search/shows', types, dispatch, params)
 };
 

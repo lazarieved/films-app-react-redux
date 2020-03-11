@@ -11,14 +11,15 @@ import {connect} from 'react-redux'
 class ContainerFilmComponent extends React.Component {
   componentDidMount() {
     const {films, showAllFilms} = this.props;
-    if (!films.length) {
-      showAllFilms('/show');
-    }
     const login = {
       login: 'ediked',
       password: '123qwe',
       id: '7777777'
     };
+
+    if (!films.length) {
+      showAllFilms('/show');
+    }
 
     const loginStingify = JSON.stringify(login);
     localStorage.setItem('login', loginStingify);
@@ -35,7 +36,6 @@ class ContainerFilmComponent extends React.Component {
       favoriteFilmsIsLogin,
       watchedFilms,
       watchedFilm,
-
     } = this.props;
     return (
       <div>
